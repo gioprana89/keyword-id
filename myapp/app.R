@@ -812,6 +812,49 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      
+     
+     
+     
+     
+     tabPanel(title = tags$h5( tags$img(src = "katakunci-unscreen.gif", width = "30px"), 'Available Keywords'),
+              
+              
+              h1("Available Keywords",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+              
+              
+              br(),
+              
+              shinycssloaders::withSpinner(DT::DTOutput(ns("katakunci_yang_tersedia"))),
+              
+              br()
+              
+              
+              
+              
+     ), #Akhir tabpanel Available Keyword
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
        
        tabPanel(title = tags$h5( tags$img(src = "team.gif", width = "30px"), 'The Team'),
                 
@@ -1075,6 +1118,128 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       return(nama)
       
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    output$katakunci_yang_tersedia <- DT::renderDT({
+      
+      dat <- read_xlsx("data_paper.xlsx")
+      dat <- as.data.frame(dat)
+      
+      colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                        "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                        "Scopus", "Scope", "Already Downloaded?", "Date")
+      
+      
+      
+      
+      
+      ambil_keyword <- dat[,"Keywords"]
+      ambil_keyword <- as.data.frame(ambil_keyword)
+      
+      simpan_keyword <- vector(mode = "character")
+      
+      
+      for(i in 1 :  length(ambil_keyword[,1])  )
+      {
+        
+        X <- ambil_keyword[i,1]
+        
+        X <- tolower(X) #mengubah menjadi huruf kecil
+        
+        
+        X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+        
+        simpan_keyword = c(simpan_keyword, X)
+        
+        
+        
+        
+      }
+      
+      
+      
+      
+      
+      tabel <- table(simpan_keyword)
+      nama <- names(tabel)
+      
+      frekuensi <- unlist(tabel)
+      names(frekuensi) <- NULL
+      
+      frekuensi <- unlist(frekuensi)
+      frekuensi <- as.numeric(frekuensi)
+      
+      
+      
+      
+      
+      persentase <- frekuensi / sum(frekuensi) * 100
+      
+      persentase <- round(persentase, digits = 2)
+      
+      nama <- unlist(nama)
+      
+      
+      data_tabel <- data.frame(nama, frekuensi, persentase)
+      
+      colnames(data_tabel) <- c("Keywords", "Frequency", "Percentage (%)")
+      
+      print(data_tabel)
+      
+      
+      
+      
+      
+      
+    })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
