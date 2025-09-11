@@ -28,50 +28,35 @@ connected_paper_by_keyword_ui <- function(id) {
   
   fluidPage(
     
+    
+    includeHTML("informasi.html"),
+    
+    br(),
+    
+    br(),
+    
+    
     textInput(ns("get_keyword"),
-    "Input One Keyword", 
-    "Online Gambling"),
+              "Input One Keyword", 
+              "Online Gambling"),
+    
+    
+    
+    #uiOutput(ns("tampilkan_untuk_input_kata_kunci")),
+    
+ 
+    
+    
+    #uiOutput(ns("tampilkan_kotak_kata_kunci")),
+    
     
 
     actionButton(ns("go"), "Find Article!", class = "btn-primary"),
     
     
+    
+    
     br(),
-    br(),    br(),
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    h1("Selected Articles",style="text-shadow: -1px 0 blue,
-               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
     
     
     
@@ -79,607 +64,9 @@ connected_paper_by_keyword_ui <- function(id) {
     
     br(),
     
-    DT::DTOutput(ns("open_data_article")),
-    
-    br(),
-    br(),    br(),
-    
-    
-    h1("Analysis of Keywords",style="text-shadow: -1px 0 blue,
-               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
-    
-    
-    br(),           
-    
-    textInput(ns("get_number_of_keyword_display_in_line_chart"),
-              "Number of Keywords in Line Chart", 
-              "5"),
-    
-    
-    
-    tabsetPanel(
-      
-      
-      tabPanel("300 x 300",
-               
-               actionButton(ns('cetak_gambar_300_300_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_300_type1"), width = "300px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("500 x 300",
-               
-               
-               actionButton(ns('cetak_gambar_500_300_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_300_type1"), width = "500px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("700 x 300",
-               
-               
-               actionButton(ns('cetak_gambar_700_300_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_300_type1"), width = "700px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("900 x 300",
-               
-               
-               actionButton(ns('cetak_gambar_900_300_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_300_type1"), width = "900px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1100 x 300",
-               
-               
-               actionButton(ns('cetak_gambar_1100_300_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_300_type1"), width = "1100px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1200 x 300",
-               
-               
-               actionButton(ns('cetak_gambar_1200_300_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_300_type1"), width = "1200px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      tabPanel("1300 x 300",
-               
-               actionButton(ns('cetak_gambar_1300_300_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_300_type1"), width = "1300px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1400 x 300",
-               
-               actionButton(ns('cetak_gambar_1400_300_type1'),'Print'),
-               
-               br(),
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_300_type1"), width = "1400px", height = "300px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      tabPanel("300 x 500",
-               
-               actionButton(ns('cetak_gambar_300_500_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_500_type1"), width = "300px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("500 x 500",
-               
-               
-               actionButton(ns('cetak_gambar_500_500_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_500_type1"), width = "500px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("700 x 500",
-               
-               
-               actionButton(ns('cetak_gambar_700_500_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_500_type1"), width = "700px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("900 x 500",
-               
-               
-               actionButton(ns('cetak_gambar_900_500_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_500_type1"), width = "900px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1100 x 500",
-               
-               
-               actionButton(ns('cetak_gambar_1100_500_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_500_type1"), width = "1100px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1200 x 500",
-               
-               
-               actionButton(ns('cetak_gambar_1200_500_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_500_type1"), width = "1200px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      tabPanel("1300 x 500",
-               
-               actionButton(ns('cetak_gambar_1300_500_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_500_type1"), width = "1300px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1400 x 500",
-               
-               actionButton(ns('cetak_gambar_1400_500_type1'),'Print'),
-               
-               br(),
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_500_type1"), width = "1400px", height = "500px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      tabPanel("300 x 700",
-               
-               actionButton(ns('cetak_gambar_300_700_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_700_type1"), width = "300px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("500 x 700",
-               
-               
-               actionButton(ns('cetak_gambar_500_700_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_700_type1"), width = "500px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("700 x 700",
-               
-               
-               actionButton(ns('cetak_gambar_700_700_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_700_type1"), width = "700px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("900 x 700",
-               
-               
-               actionButton(ns('cetak_gambar_900_700_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_700_type1"), width = "900px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1100 x 700",
-               
-               
-               actionButton(ns('cetak_gambar_1100_700_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_700_type1"), width = "1100px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1200 x 700",
-               
-               
-               actionButton(ns('cetak_gambar_1200_700_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_700_type1"), width = "1200px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      tabPanel("1300 x 700",
-               
-               actionButton(ns('cetak_gambar_1300_700_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_700_type1"), width = "1300px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1400 x 700",
-               
-               actionButton(ns('cetak_gambar_1400_700_type1'),'Print'),
-               
-               br(),
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_700_type1"), width = "1400px", height = "700px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("300 x 900",
-               
-               actionButton(ns('cetak_gambar_300_900_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_900_type1"), width = "300px", height = "900px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("500 x 900",
-               
-               
-               actionButton(ns('cetak_gambar_500_900_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_900_type1"), width = "500px", height = "900px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("700 x 900",
-               
-               
-               actionButton(ns('cetak_gambar_700_900_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_900_type1"), width = "700px", height = "900px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      
-      tabPanel("900 x 900",
-               
-               
-               actionButton(ns('cetak_gambar_900_900_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_900_type1"), width = "900px", height = "900px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1100 x 900",
-               
-               
-               actionButton(ns('cetak_gambar_1100_900_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_900_type1"), width = "1100px", height = "900px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1200 x 900",
-               
-               
-               actionButton(ns('cetak_gambar_1200_900_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_900_type1"), width = "1200px", height = "900px" )),
-               
-               br()
-               
-      ),
-      
-      
-      tabPanel("1300 x 900",
-               
-               actionButton(ns('cetak_gambar_1300_900_type1'),'Print'),
-               
-               br(),
-               
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_900_type1"), width = "1300px", height = "900px" )),
-               
-               br()
-               
-      ),
-      
-      
-      
-      tabPanel("1400 x 900",
-               
-               actionButton(ns('cetak_gambar_1400_900_type1'),'Print'),
-               
-               br(),
-               
-               shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_900_type1"), width = "1400px", height = "900px" )),
-               
-               br()
-               
-      )
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-    ), #akhir dari tabset panel
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    ###############Distribusi Frekuensi Data Keyword######################
-    
     
     br(),
     
-    br(),
-    
-    DT::DTOutput(ns("distribusi_frekuensi_data_keywords")),
     
     
     
@@ -698,6 +85,761 @@ connected_paper_by_keyword_ui <- function(id) {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   # shinycssloaders::withSpinner(DT::DTOutput(ns("distribusi_frekuensi_data_keywords"))),
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   tabsetPanel(
+     
+     tabPanel(title = tags$h5( tags$img(src = "articles.gif", width = "30px"), 'Selected Articles'),
+              
+              
+              
+              
+              uiOutput(ns("tampilkan_pilihan_variabel_yang_akan_ditampilkan")),
+              
+              br(),
+              
+              uiOutput(ns("tampilkan_select_articles")),
+              
+              
+              
+              
+              br(),
+              
+              
+              uiOutput(ns("tampilkan_data_artikel")),
+              
+              
+              
+              
+              br()
+              
+              
+     ), #Akhir tabpanel selected articles
+    
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    
+    
+     tabPanel(title = tags$h5( tags$img(src = "keywords.gif", width = "30px"), 'Analysis of Keywords'),
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              uiOutput(ns("tampilkan_analisis_keyword")),
+              
+              
+              
+              br(),           
+              
+              textInput(ns("get_number_of_keyword_display_in_line_chart"),
+                        "Number of Keywords in Line Chart", 
+                        "5"),
+              
+              
+              
+              tabsetPanel(
+                
+                
+                tabPanel("300 x 300",
+                         
+                         actionButton(ns('cetak_gambar_300_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_300_type1"), width = "300px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 300",
+                         
+                         
+                         actionButton(ns('cetak_gambar_500_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_300_type1"), width = "500px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 300",
+                         
+                         
+                         actionButton(ns('cetak_gambar_700_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_300_type1"), width = "700px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 300",
+                         
+                         
+                         actionButton(ns('cetak_gambar_900_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_300_type1"), width = "900px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 300",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1100_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_300_type1"), width = "1100px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 300",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1200_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_300_type1"), width = "1200px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 300",
+                         
+                         actionButton(ns('cetak_gambar_1300_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_300_type1"), width = "1300px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 300",
+                         
+                         actionButton(ns('cetak_gambar_1400_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_300_type1"), width = "1400px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                tabPanel("300 x 500",
+                         
+                         actionButton(ns('cetak_gambar_300_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_500_type1"), width = "300px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 500",
+                         
+                         
+                         actionButton(ns('cetak_gambar_500_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_500_type1"), width = "500px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 500",
+                         
+                         
+                         actionButton(ns('cetak_gambar_700_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_500_type1"), width = "700px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 500",
+                         
+                         
+                         actionButton(ns('cetak_gambar_900_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_500_type1"), width = "900px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 500",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1100_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_500_type1"), width = "1100px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 500",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1200_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_500_type1"), width = "1200px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 500",
+                         
+                         actionButton(ns('cetak_gambar_1300_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_500_type1"), width = "1300px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 500",
+                         
+                         actionButton(ns('cetak_gambar_1400_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_500_type1"), width = "1400px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                tabPanel("300 x 700",
+                         
+                         actionButton(ns('cetak_gambar_300_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_700_type1"), width = "300px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 700",
+                         
+                         
+                         actionButton(ns('cetak_gambar_500_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_700_type1"), width = "500px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 700",
+                         
+                         
+                         actionButton(ns('cetak_gambar_700_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_700_type1"), width = "700px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 700",
+                         
+                         
+                         actionButton(ns('cetak_gambar_900_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_700_type1"), width = "900px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 700",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1100_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_700_type1"), width = "1100px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 700",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1200_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_700_type1"), width = "1200px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 700",
+                         
+                         actionButton(ns('cetak_gambar_1300_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_700_type1"), width = "1300px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 700",
+                         
+                         actionButton(ns('cetak_gambar_1400_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_700_type1"), width = "1400px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("300 x 900",
+                         
+                         actionButton(ns('cetak_gambar_300_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_300_900_type1"), width = "300px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 900",
+                         
+                         
+                         actionButton(ns('cetak_gambar_500_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_500_900_type1"), width = "500px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 900",
+                         
+                         
+                         actionButton(ns('cetak_gambar_700_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_700_900_type1"), width = "700px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 900",
+                         
+                         
+                         actionButton(ns('cetak_gambar_900_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_900_900_type1"), width = "900px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 900",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1100_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1100_900_type1"), width = "1100px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 900",
+                         
+                         
+                         actionButton(ns('cetak_gambar_1200_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1200_900_type1"), width = "1200px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 900",
+                         
+                         actionButton(ns('cetak_gambar_1300_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1300_900_type1"), width = "1300px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 900",
+                         
+                         actionButton(ns('cetak_gambar_1400_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("grafik_garis_1400_900_type1"), width = "1400px", height = "900px" )),
+                         
+                         br()
+                         
+                )
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+              ), #akhir dari tabset panel
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              ###############Distribusi Frekuensi Data Keyword######################
+              
+              
+              br(),
+              
+              br(),
+              
+              
+              
+              
+              uiOutput(ns("tampilkan_frekuensi_keyword")),
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              br()
+              
+              
+     ), #Akhir tabpanel Distribution of Frequency Keywords
+     
+     
+     
+     
+     
+     
+     
+       
+       tabPanel(title = tags$h5( tags$img(src = "team.gif", width = "30px"), 'The Team'),
+                
+                
+                
+                includeHTML("team.html"),
+                
+                
+                br()
+                
+                
+                
+                
+       ) #Akhir tabpanel About
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+   ), #Akhir tabset panel
+     
     
     
     
@@ -819,11 +961,176 @@ connected_paper_by_keyword_ui <- function(id) {
 connected_paper_by_keyword_server <- function(input, output, session) {
   
   
+  
+  
+  observeEvent(input$go, {
+    
+    
+    
+    output$tampilkan_data_artikel <- renderUI({
+      
+      shinycssloaders::withSpinner(DT::DTOutput(session$ns("open_data_article")))
+      
+    })
+    
+    
+    
+    output$open_data_article <- DT::renderDT({
+      
+      data_artikel_terpilih <- fungsi_hitung_artikel_terpilih()
+      
+      
+      ###########
+      
+      
+      nama_terpilih <- input$terpilih_variabel_yang_akan_ditampilkan
+      
+      
+      
+      
+      
+      print(data_artikel_terpilih[nama_terpilih])
+      
+      
+      
+    }) #Akhir renderDT 
+    
+    
+    
+    
+    
+    output$tampilkan_select_articles <- renderUI({
+      
+      h1("Selected Articles",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         )
+      
+    })
+    
+    
+    
+    
+    
+    
+    
+    
+    output$tampilkan_frekuensi_keyword <- renderUI({
+      
+      shinycssloaders::withSpinner(DT::DTOutput(session$ns("distribusi_frekuensi_data_keywords")))
+      
+    })
+    
+    
+    
+    
+    
+    
+    output$tampilkan_analisis_keyword <- renderUI({
+      
+      h1("Analysis of Keywords",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         )
+      
+    })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    output$tampilkan_pilihan_variabel_yang_akan_ditampilkan <- renderUI({
+      
+      
+      
+      
+      checkboxGroupInput(session$ns("terpilih_variabel_yang_akan_ditampilkan"), 
+                         label="Select Information:", choices = c( kirim_nama_variabel()), 
+      selected=c("Title of Article", "Author", "Number of Author", 
+                 "Year", "Volume", "Issue", "Page", "Name of Journal", "Keywords", "ISSN"), inline = TRUE )
+      
+      
+
+      
+    })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    kirim_nama_variabel <- function()
+    {
+      
+      nama <- c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                "Scopus", "Scope", "Already Downloaded?", "Date")
+      
+      return(nama)
+      
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  }) #Akhir go
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #####################
+  
+  
   fungsi_hitung_artikel_terpilih <- function()
   {
     
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date")
     
     cek_keyword = input$get_keyword
     
@@ -862,6 +1169,17 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     data_terpilih <- dat[c(simpan_indeks),]
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     return(data_terpilih)
     
   }
@@ -869,18 +1187,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   
   
   
-  observeEvent(input$go, {
-    
   
-  
-  output$open_data_article <- DT::renderDT({
-    
-    data_artikel_terpilih <- fungsi_hitung_artikel_terpilih()
-    print(data_artikel_terpilih)
-    
-    
-    
-  }) #Akhir renderDT 
   
   
   
@@ -995,6 +1302,9 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date")
     
     cek_keyword = input$get_keyword
     
@@ -2456,6 +2766,9 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date")
     
     cek_keyword = input$get_keyword
     
@@ -2572,11 +2885,6 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   
   
   
-  
-  
-  
-  
-  }) #Akhir go
   
   
   
