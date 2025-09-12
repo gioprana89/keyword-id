@@ -6,6 +6,16 @@ library(stringr)
 library(shiny)
 library(ggthemes)
 library(dplyr)
+
+
+
+library(tidytext)
+
+library(wordcloud)
+
+
+
+
 #library(shinyAce)
 #source("chooser.R")
 
@@ -786,12 +796,108 @@ connected_paper_by_keyword_ui <- function(id) {
               uiOutput(ns("tampilkan_frekuensi_keyword")),
               
               
+              br(),
+              
+        
               
               
               
               
               
+              #######################Analisis Wordcloud
               
+              
+              
+              
+              fluidRow(
+                column(4,
+                       
+                       radioButtons(ns("warna_wordcloud"),
+                       
+                       "Theme of Words:", 
+                                    c("Blues" = "Blues", "BuGn"="BuGn",
+                                      "BuPu"="BuPu", "GnBu"="GnBu", "Greens"="Greens", "YlOrRd"="YlOrRd", "YlOrBr" = "YlOrBr", "YlGnBu" = "YlGnBu",
+                                      "Spectral" = "Spectral", "RdYlGn" = "RdYlGn", "YlGn" = "YlGn",
+                                      "RdBu" = "RdBu", "RdGy" = "RdGy", "RdYlBu" = "RdYlBu",
+                                      "PiYG" = "PiYG", "PRGn" = "PRGn", "PuOr" = "PuOr",
+                                      "Purples" = "Purples", "RdPu" = "RdPu", "BrBG" = "BrBG"), inline=TRUE, selected = "Spectral"   ),
+                       
+                       
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                column(4,
+                       
+                       
+                       
+                       
+                       sliderInput(ns("max_words"), "max.words:",
+                                      min = 1, max = 1000,
+                                      value = 5),
+                       
+                       
+                       
+                       
+                       sliderInput(ns("n.brewer.pal"), "n.brewer.pal:",
+                                   min = 1, max = 100,
+                                   value = 10),
+                       
+                       #n.brewer.pal
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                
+                column(4,
+                       
+                       
+                       
+                       sliderInput(ns("min_freq"), "min.freq:",
+                                   min = 1, max = 1000,
+                                   value = 1),
+                       
+                       
+                       textAreaInput(ns("rot.per"), 
+                                     "rot.per", value = "0.35", height = 70, width = 100),
+                       
+                       
+                       #rot.per=0.35
+                       
+                       
+                       #min.freq = 4
+                       
+                       br()
+                       
+                       
+                )
+                
+                
+                
+              ), #Akhir fluidrow
+              
+              
+              
+   
+   
+   
+   br(),
+   
+   
+   
+   
+              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"))  ),
+              
+        
+   #shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"), width = "1400px", height = "900px" )),
               
               
               
@@ -826,6 +932,22 @@ connected_paper_by_keyword_ui <- function(id) {
               br(),
               
               shinycssloaders::withSpinner(DT::DTOutput(ns("katakunci_yang_tersedia"))),
+              
+              
+              
+              br(),
+              
+              
+              
+              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud_full"))  ),
+              
+              
+              
+              
+              
+              
+              
+              
               
               br()
               
@@ -1173,6 +1295,11 @@ connected_paper_by_keyword_server <- function(input, output, session) {
         X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
         X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
         X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+        X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+        
         
         simpan_keyword = c(simpan_keyword, X)
         
@@ -1317,6 +1444,11 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
       
       ada_keyword <- cek_keyword %in% X
       
@@ -1491,6 +1623,11 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
       
       ada_keyword <- cek_keyword %in% X
       
@@ -2955,6 +3092,11 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
       
       ada_keyword <- cek_keyword %in% X
       
@@ -3042,6 +3184,270 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  ########################Grafik
+  
+  
+  fungsi_grafik_wordcloud <- function()
+  {
+    
+    
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date")
+    
+    cek_keyword = input$get_keyword
+    
+    simpan_indeks <- vector(mode = "numeric")
+    simpan_kata <- vector(mode = "character")
+    k = 0
+    data_keyword <- dat[,"Keywords"]
+    
+    for(i in 1 : length(data_keyword))
+    {
+      
+      X <- data_keyword[i]
+      
+      X <- tolower(X) #mengubah menjadi huruf kecil
+      cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      
+      ada_keyword <- cek_keyword %in% X
+      
+      if(ada_keyword == TRUE)
+      {
+        k = k + 1
+        simpan_indeks[k] = i
+        simpan_kata <- c(simpan_kata, X)
+        
+      }
+      
+    }
+    
+    
+    
+    
+    simpan_keyword = simpan_kata
+    
+    
+    simpan_keyword_hapus_spasi <- gsub(" ", "", simpan_keyword)
+    simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+    simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+    
+    
+    
+    
+    
+    
+    
+    text <- simpan_keyword_hapus_spasi
+    
+    jumlah_teks <- length(text)
+    
+    
+    
+    text_df <- data_frame(line = 1:jumlah_teks , text = text)
+
+    simpan_kata <- text_df %>%
+      unnest_tokens(word, text)
+    
+    rot.per <- read.csv(text=input$rot.per, header = FALSE, sep="", na.strings=c("","NA","."))
+    rot.per = unlist(rot.per)
+    rot.per = as.numeric(rot.per)
+    angka_rot.per <- rot.per
+    
+
+    
+p <-    simpan_kata %>%
+      anti_join(stop_words) %>%
+      count(word) %>%
+      with(wordcloud(word, n, max.words = input$max_words,
+                     min.freq = input$min_freq,           
+                     random.order=FALSE, rot.per = angka_rot.per,            
+                     colors=brewer.pal(input$n.brewer.pal,    input$warna_wordcloud  )))
+    
+    
+
+    
+    
+    return(p)
+    
+    
+    
+    
+  } #Akhir fungsi grafik
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  output$grafik_wordcloud <- renderPlot({
+    
+    p <- fungsi_grafik_wordcloud()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ################Grafik wordcloud full
+  
+  
+  
+  
+  output$grafik_wordcloud_full <- renderPlot({
+    
+
+    
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date")
+    
+    cek_keyword = input$get_keyword
+    
+    simpan_indeks <- vector(mode = "numeric")
+    simpan_kata <- vector(mode = "character")
+    k = 0
+    data_keyword <- dat[,"Keywords"]
+    
+    for(i in 1 : length(data_keyword))
+    {
+      
+      X <- data_keyword[i]
+      
+      X <- tolower(X) #mengubah menjadi huruf kecil
+      cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      
+  
+        simpan_kata <- c(simpan_kata, X)
+        
+      
+      
+    }
+    
+    
+    
+    
+    simpan_keyword = simpan_kata
+    
+    
+    simpan_keyword_hapus_spasi <- gsub(" ", "", simpan_keyword)
+    simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+    simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+    
+    
+    
+    
+    
+    
+    
+    text <- simpan_keyword_hapus_spasi
+    
+    jumlah_teks <- length(text)
+    
+    
+    
+    text_df <- data_frame(line = 1:jumlah_teks , text = text)
+    
+    simpan_kata <- text_df %>%
+      unnest_tokens(word, text)
+    
+    rot.per <- read.csv(text=input$rot.per, header = FALSE, sep="", na.strings=c("","NA","."))
+    rot.per = unlist(rot.per)
+    rot.per = as.numeric(rot.per)
+    angka_rot.per <- rot.per
+    
+    
+    
+    p <-    simpan_kata %>%
+      anti_join(stop_words) %>%
+      count(word) %>%
+      with(wordcloud(word, n, max.words = input$max_words,
+                     min.freq = input$min_freq,           
+                     random.order=FALSE, rot.per = angka_rot.per,            
+                     colors=brewer.pal(input$n.brewer.pal,    input$warna_wordcloud  )))
+    
+    
+    
+    
+    
+    print(p)
+    
+    
+    
+    
+    
+  })
   
   
   
