@@ -1108,7 +1108,34 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      
-     
+   
+   
+   tabPanel(title = tags$h5( tags$img(src = "all-articles-unscreen.gif", width = "30px"), 'All Articles'),
+            
+            
+            h1("All Articles",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+            
+            
+            br(),
+            
+            
+            
+            uiOutput(ns("tampilkan_pilihan_variabel_yang_akan_ditampilkan_all")),
+            
+            br(),
+            
+            uiOutput(ns("tampilkan_data_all")),
+            
+            
+            
+            
+            
+            
+            br()
+            
+            
+   ), #Akhir tab all articles
      
      
      
@@ -1265,6 +1292,111 @@ connected_paper_by_keyword_ui <- function(id) {
 
 
 connected_paper_by_keyword_server <- function(input, output, session) {
+  
+  
+  
+  
+  
+  
+  #############All Articles###############
+  
+  
+  
+  
+  
+  
+  output$tampilkan_pilihan_variabel_yang_akan_ditampilkan_all <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_variabel_yang_akan_ditampilkan_all"), 
+                       label="Select Information:", choices = c( kirim_nama_variabel()), 
+                       selected=c("Title of Article", "Author", "Number of Author", 
+                                  "Year", "Volume", "Issue", "Page", "Name of Journal", "Keywords", "ISSN"), inline = TRUE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  output$tampilkan_data_all <- renderUI({
+    
+    shinycssloaders::withSpinner(DT::DTOutput(session$ns("open_data_all_article")))
+    
+  })
+  
+  
+  
+  
+  #######################################
+  
+  
+  output$open_data_all_article <- DT::renderDT({
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date")
+    
+    
+    
+    nama_terpilih <- input$terpilih_variabel_yang_akan_ditampilkan_all
+    
+    
+    
+    
+    
+    #print(data_artikel_terpilih[nama_terpilih])
+    
+    
+    
+    
+    print(dat[nama_terpilih])
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ####################
+  ###################
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
