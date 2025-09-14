@@ -309,7 +309,7 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      
-     tabPanel(title = tags$h5( tags$img(src = "articles.gif", width = "30px"), 'Selected Articles'),
+     tabPanel(title = tags$h5( tags$img(src = "articles-unscreen.gif", width = "30px"), 'Find & Analysis Articles Using Keywords'),
               
               
               
@@ -332,69 +332,6 @@ connected_paper_by_keyword_ui <- function(id) {
               
               
               uiOutput(ns("tampilkan_data_artikel")),
-              
-              
-              
-              
-              br()
-              
-              
-     ), #Akhir tabpanel selected articles
-    
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-    
-    
-     tabPanel(title = tags$h5( tags$img(src = "keywords.gif", width = "30px"), 'Analysis of Keywords'),
-              
-              
-              
-              
-              
-              
               
               
               
@@ -982,7 +919,7 @@ connected_paper_by_keyword_ui <- function(id) {
               
               br(),
               
-        
+              
               
               
               
@@ -997,8 +934,8 @@ connected_paper_by_keyword_ui <- function(id) {
                 column(4,
                        
                        radioButtons(ns("warna_wordcloud"),
-                       
-                       "Theme of Words:", 
+                                    
+                                    "Theme of Words:", 
                                     c("Blues" = "Blues", "BuGn"="BuGn",
                                       "BuPu"="BuPu", "GnBu"="GnBu", "Greens"="Greens", "YlOrRd"="YlOrRd", "YlOrBr" = "YlOrBr", "YlGnBu" = "YlGnBu",
                                       "Spectral" = "Spectral", "RdYlGn" = "RdYlGn", "YlGn" = "YlGn",
@@ -1021,8 +958,8 @@ connected_paper_by_keyword_ui <- function(id) {
                        
                        
                        sliderInput(ns("max_words"), "max.words:",
-                                      min = 1, max = 1000,
-                                      value = 5),
+                                   min = 1, max = 1000,
+                                   value = 5),
                        
                        
                        
@@ -1070,20 +1007,18 @@ connected_paper_by_keyword_ui <- function(id) {
               
               
               
-   
-   
-   
-   br(),
-   
-   
-   
-   
+              
+              
+              
+              br(),
+              
+              
+              
+              
               shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"))  ),
               
-        
-   #shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"), width = "1400px", height = "900px" )),
               
-              
+              #shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"), width = "1400px", height = "900px" )),
               
               
               
@@ -1094,7 +1029,78 @@ connected_paper_by_keyword_ui <- function(id) {
               br()
               
               
-     ), #Akhir tabpanel Distribution of Frequency Keywords
+     ), #Akhir tabpanel selected articles
+    
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     tabPanel(title = tags$h5( tags$img(src = "unique-number-unscreen.gif", width = "30px"), 'Find & Analysis Articles Using Unique ID'),
+              
+              
+              
+              
+              
+              
+              br()
+              
+              
+              
+              
+     ), #akhir tab Find & Analysis Articles Using Unique ID
+     
+     
+     
+     
+     
+     
+     
+     
+     
      
      
      
@@ -1348,7 +1354,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                      "Scopus", "Scope", "Already Downloaded?", "Date")
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
     
     
     
@@ -1508,7 +1514,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       
       nama <- c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                 "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                "Scopus", "Scope", "Already Downloaded?", "Date")
+                "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
       
       return(nama)
       
@@ -1543,7 +1549,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       
       colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                         "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                        "Scopus", "Scope", "Already Downloaded?", "Date")
+                        "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
       
       
       
@@ -1695,7 +1701,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                      "Scopus", "Scope", "Already Downloaded?", "Date")
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
     
     cek_keyword = input$get_keyword
     
@@ -1874,7 +1880,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     dat <- as.data.frame(dat)
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                      "Scopus", "Scope", "Already Downloaded?", "Date")
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
     
     cek_keyword = input$get_keyword
     
@@ -3343,7 +3349,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     dat <- as.data.frame(dat)
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                      "Scopus", "Scope", "Already Downloaded?", "Date")
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
     
     cek_keyword = input$get_keyword
     
@@ -3477,7 +3483,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     dat <- as.data.frame(dat)
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                      "Scopus", "Scope", "Already Downloaded?", "Date")
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
     
     cek_keyword = input$get_keyword
     
@@ -3633,7 +3639,7 @@ p <-    simpan_kata %>%
     dat <- as.data.frame(dat)
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
-                      "Scopus", "Scope", "Already Downloaded?", "Date")
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
     
     cek_keyword = input$get_keyword
     
