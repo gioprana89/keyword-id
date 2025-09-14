@@ -1147,6 +1147,39 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      
+   
+   
+   
+   
+   
+   tabPanel(title = tags$h5( tags$img(src = "list-journal-unscreen.gif", width = "30px"), 'List of Journal'),
+            
+            
+            
+            includeHTML("team.html"),
+            
+            
+            br()
+            
+            
+            
+            
+   ), #Akhir tabpanel About
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
      
      
      
