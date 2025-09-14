@@ -41,15 +41,7 @@ connected_paper_by_keyword_ui <- function(id) {
     
     includeHTML("informasi.html"),
     
-    br(),
-    
-    br(),
-    
-    
-    textInput(ns("get_keyword"),
-              "Input One Keyword", 
-              "Online Gambling"),
-    
+
     
     
     #uiOutput(ns("tampilkan_untuk_input_kata_kunci")),
@@ -61,7 +53,7 @@ connected_paper_by_keyword_ui <- function(id) {
     
     
 
-    actionButton(ns("go"), "Find Article!", class = "btn-primary"),
+   # actionButton(ns("go"), "Find Article!", class = "btn-primary"),
     
     
     
@@ -130,10 +122,202 @@ connected_paper_by_keyword_ui <- function(id) {
     
    tabsetPanel(
      
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     tabPanel(title = tags$h5( tags$img(src = "katakunci-unscreen.gif", width = "30px"), 'Available Keywords'),
+              
+              
+              h1("Available Keywords",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+              
+              
+              br(),
+              
+              shinycssloaders::withSpinner(DT::DTOutput(ns("katakunci_yang_tersedia"))),
+              
+              
+              
+              br(),
+              
+              
+              
+              
+              
+              
+              
+              #######################Analisis Wordcloud
+              
+              
+              
+              
+              fluidRow(
+                column(4,
+                       
+                       radioButtons(ns("warna_wordcloud_all"),
+                                    
+                                    "Theme of Words:", 
+                                    c("Blues" = "Blues", "BuGn"="BuGn",
+                                      "BuPu"="BuPu", "GnBu"="GnBu", "Greens"="Greens", "YlOrRd"="YlOrRd", "YlOrBr" = "YlOrBr", "YlGnBu" = "YlGnBu",
+                                      "Spectral" = "Spectral", "RdYlGn" = "RdYlGn", "YlGn" = "YlGn",
+                                      "RdBu" = "RdBu", "RdGy" = "RdGy", "RdYlBu" = "RdYlBu",
+                                      "PiYG" = "PiYG", "PRGn" = "PRGn", "PuOr" = "PuOr",
+                                      "Purples" = "Purples", "RdPu" = "RdPu", "BrBG" = "BrBG"), inline=TRUE, selected = "Spectral"   ),
+                       
+                       
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                column(4,
+                       
+                       
+                       
+                       
+                       sliderInput(ns("max_words_all"), "max.words:",
+                                   min = 1, max = 1000,
+                                   value = 5),
+                       
+                       
+                       
+                       
+                       sliderInput(ns("n.brewer.pal_all"), "n.brewer.pal:",
+                                   min = 1, max = 100,
+                                   value = 10),
+                       
+                       #n.brewer.pal
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                
+                column(4,
+                       
+                       
+                       
+                       sliderInput(ns("min_freq_all"), "min.freq:",
+                                   min = 1, max = 1000,
+                                   value = 1),
+                       
+                       
+                       textAreaInput(ns("rot.per_all"), 
+                                     "rot.per", value = "0.35", height = 70, width = 100),
+                       
+                       
+                       #rot.per=0.35
+                       
+                       
+                       #min.freq = 4
+                       
+                       br()
+                       
+                       
+                )
+                
+                
+                
+              ), #Akhir fluidrow
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud_full"))  ),
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              br()
+              
+              
+              
+              
+     ), #Akhir tabpanel Available Keyword
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
      tabPanel(title = tags$h5( tags$img(src = "articles.gif", width = "30px"), 'Selected Articles'),
               
               
               
+              textInput(ns("get_keyword"),
+                        "Input One Keyword", 
+                        "Online Gambling"),
+              
+              br(),
               
               uiOutput(ns("tampilkan_pilihan_variabel_yang_akan_ditampilkan")),
               
@@ -922,49 +1106,6 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      
-     tabPanel(title = tags$h5( tags$img(src = "katakunci-unscreen.gif", width = "30px"), 'Available Keywords'),
-              
-              
-              h1("Available Keywords",style="text-shadow: -1px 0 blue,
-               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
-              
-              
-              br(),
-              
-              shinycssloaders::withSpinner(DT::DTOutput(ns("katakunci_yang_tersedia"))),
-              
-              
-              
-              br(),
-              
-              
-              
-              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud_full"))  ),
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              br()
-              
-              
-              
-              
-     ), #Akhir tabpanel Available Keyword
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
      
      
      
@@ -1128,7 +1269,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   
   
   
-  observeEvent(input$go, {
+  #observeEvent(input$go, {
     
     
     
@@ -1295,10 +1436,10 @@ connected_paper_by_keyword_server <- function(input, output, session) {
         X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
         X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
         X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
-        X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
-        X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
-        X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
-        X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+        #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+        #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+        #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+        #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
         
         
         simpan_keyword = c(simpan_keyword, X)
@@ -1389,7 +1530,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     
     
-  }) #Akhir go
+ ## }) #Akhir go
   
   
   
@@ -1444,10 +1585,10 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
       
       
       ada_keyword <- cek_keyword %in% X
@@ -1623,10 +1764,10 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
       
       
       ada_keyword <- cek_keyword %in% X
@@ -3092,10 +3233,10 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
       
       
       ada_keyword <- cek_keyword %in% X
@@ -3226,10 +3367,10 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
-      X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
       
       
       ada_keyword <- cek_keyword %in% X
@@ -3422,7 +3563,7 @@ p <-    simpan_kata %>%
     simpan_kata <- text_df %>%
       unnest_tokens(word, text)
     
-    rot.per <- read.csv(text=input$rot.per, header = FALSE, sep="", na.strings=c("","NA","."))
+    rot.per <- read.csv(text=input$rot.per_all, header = FALSE, sep="", na.strings=c("","NA","."))
     rot.per = unlist(rot.per)
     rot.per = as.numeric(rot.per)
     angka_rot.per <- rot.per
@@ -3432,10 +3573,10 @@ p <-    simpan_kata %>%
     p <-    simpan_kata %>%
       anti_join(stop_words) %>%
       count(word) %>%
-      with(wordcloud(word, n, max.words = input$max_words,
-                     min.freq = input$min_freq,           
+      with(wordcloud(word, n, max.words = input$max_words_all,
+                     min.freq = input$min_freq_all,           
                      random.order=FALSE, rot.per = angka_rot.per,            
-                     colors=brewer.pal(input$n.brewer.pal,    input$warna_wordcloud  )))
+                     colors=brewer.pal(input$n.brewer.pal_all,    input$warna_wordcloud_all  )))
     
     
     

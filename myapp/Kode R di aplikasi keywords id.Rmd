@@ -1,0 +1,167 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+list.files()
+```
+
+```{r}
+
+library(readxl)
+
+data_paper <- read_xlsx("data_paper.xlsx")
+data_paper <- as.data.frame(data_paper)
+data_paper
+
+```
+
+
+
+#Jumlah Keywords
+```{r}
+
+ambil_keyword <- data_paper[,"Keyword"]
+ambil_keyword <- as.data.frame(ambil_keyword)
+
+simpan_keyword <- vector(mode = "character")
+  
+  
+for(i in 1 :  length(ambil_keyword[,1])  )
+{
+  
+  X <- ambil_keyword[i,1]
+  
+  X <- tolower(X) #mengubah menjadi huruf kecil
+
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #  X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+           # X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+           # X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      simpan_keyword = c(simpan_keyword, X)
+      
+      
+  
+  
+}
+
+
+
+level_simpan_keyword <- as.factor(simpan_keyword)
+
+level_simpan_keyword <- levels(level_simpan_keyword)
+
+length(level_simpan_keyword)
+
+
+level_simpan_keyword
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Jumlah Subject
+```{r}
+
+ambil_scope <- data_paper[,"Scope"]
+ambil_scope <- as.data.frame(ambil_scope)
+
+simpan_scope <- vector(mode = "character")
+  
+  
+for(i in 1 :  length(ambil_scope[,1])  )
+{
+  
+  X <- ambil_scope[i,1]
+  
+  X <- tolower(X) #mengubah menjadi huruf kecil
+
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #  X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+           # X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+           # X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      simpan_scope = c(simpan_scope, X)
+      
+      
+  
+  
+}
+
+
+
+level_simpan_scope <- as.factor(simpan_scope)
+
+level_simpan_scope <- levels(level_simpan_scope)
+
+length(level_simpan_scope)
+
+
+level_simpan_scope
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
