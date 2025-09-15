@@ -1156,7 +1156,15 @@ connected_paper_by_keyword_ui <- function(id) {
             
             
             
-            includeHTML("team.html"),
+            h1("List of Journal",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+            
+            
+            br(),
+            
+            
+            
+            uiOutput(ns("tampilkan_data_list_jurnal")),
             
             
             br()
@@ -1408,6 +1416,82 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     
   })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #######################List of Journal#########################
+  #######################List of Journal#########################
+  #######################List of Journal#########################
+  #######################List of Journal#########################
+  
+  
+  
+  
+  
+  output$tampilkan_data_list_jurnal <- renderUI({
+    
+    shinycssloaders::withSpinner(DT::DTOutput(session$ns("tampilkan_data_list_jurnal_basisdata")))
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  output$tampilkan_data_list_jurnal_basisdata <- DT::renderDT({
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    data_paper <- dat
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    grup <- group_by(data_paper, `Nama Jurnal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+print(data_jurnal)
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
   
   
   

@@ -20,6 +20,50 @@ data_paper
 
 
 
+
+#Membuat Distribusi Jumlah Artikel berdasarkan Jurnal
+```{r}
+
+
+library(dplyr)
+
+grup <- group_by(data_paper, `Nama Jurnal`, ISSN)
+
+data_jurnal <- grup %>% summarise(
+		freq = n()
+
+)
+
+data_jurnal <- as.data.frame(data_jurnal)
+
+colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+
+data_jurnal
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #Jumlah Keywords
 ```{r}
 
