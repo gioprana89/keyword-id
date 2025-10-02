@@ -178,6 +178,267 @@ level_simpan_scope
 
 
 
+```{r}
+
+library(dplyr)
+library(tidytext)
+library(widyr)
+
+
+data_tes <- data_paper[c("No", "Judul Artikel")]
+
+data_tes
+```
+
+
+
+
+```{r}
+
+ nasa_title <- data_frame( id = data_tes$No, title = data_tes$`Judul Artikel`)
+
+ nasa_title
+
+```
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+nasa_desc <- data_frame(id = data_paper$No, desc = data_paper$Keyword)
+ 
+nasa_desc %>%
+ select(desc) %>%
+ sample_n(5)
+
+```
+
+
+
+
+```{r}
+ library(tidyr)
+ nasa_keyword <- data_frame(id = data_paper$No, keyword = data_paper$Keyword) %>% unnest(keyword)
+
+ nasa_keyword
+
+```
+
+
+
+
+
+
+```{r}
+ library(tidytext)
+ nasa_keyword <- data_frame(id = data_paper$No, keyword = data_paper$Keyword) %>% unnest(keyword)
+
+ nasa_keyword <-  nasa_keyword %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+ 
+ nasa_keyword
+
+
+```
+
+
+
+```{r}
+ nasa_keyword %>%
+ count(word, sort = TRUE)
+
+```
+
+
+
+
+
+
+
+```{r}
+ library(tidytext)
+ nasa_title <- data_frame( id = data_tes$No, title = data_tes$`Judul Artikel`)
+ nasa_title <- nasa_title %>%  unnest_tokens(word, title) %>%  anti_join(stop_words)
+ 
+ nasa_title
+
+
+```
+
+
+
+
+
+
+
+```{r}
+ nasa_title %>%
+ count(word, sort = TRUE)
+
+```
+
+
+
+
+```{r}
+my_stopwords <- data_frame(word = c(as.character(1:2),
+ "role", "students"))
+
+
+
+ nasa_title <- data_frame( id = data_tes$No, title = data_tes$`Judul Artikel`)
+ nasa_title <- nasa_title %>%  unnest_tokens(word, title) %>%  anti_join(stop_words)
+ 
+ nasa_title %>%
+ count(word, sort = TRUE)
+ 
+
+
+
+```
+
+
+```{r}
+
+nasa_title <- nasa_title %>%
+ anti_join(my_stopwords)
+
+
+nasa_title
+
+
+ nasa_title %>%
+ count(word, sort = TRUE)
+ 
+```
+
+
+
+```{r}
+
+ library(widyr)
+ title_word_pairs <- nasa_title %>%
+ pairwise_count(word, id, sort = TRUE, upper = FALSE)
+ title_word_pairs
+
+```
+
+
+
+
+
+```{r}
+library(ggplot2)
+ library(igraph)
+ library(ggraph)
+
+ set.seed(1234)
+ title_word_pairs %>%
+  filter(n >= 7) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "cyan4") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE,
+                 point.padding = unit(0.2, "lines")) +
+  theme_void()
+ 
+ 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+data_keyword <- data_paper[c("Keyword")]
+data_keyword2 <- data_keyword
+
+for(i in 1 : length(data_keyword[,1]))
+{
+  
+  x <- data_keyword[i,1]
+  
+    simpan_keyword_hapus_spasi <- gsub(" ", "", x)
+    simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+    simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+    
+    data_keyword2[i,1] = simpan_keyword_hapus_spasi
+    
+    
+  
+  
+}
+
+
+data_keyword2
+```
+
+
+
+
+
+```{r}
+ library(tidytext)
+ nasa_keyword2 <- data_frame(id = c(1 :  length(data_keyword2[,1])  ), 
+              keyword = data_keyword2$Keyword) %>% unnest(keyword)
+
+ nasa_keyword2 <-  nasa_keyword2 %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+ 
+ nasa_keyword2
+
+
+```
+
+
+
+
+
+```{r}
+
+ library(widyr)
+ title_word_pairs <- nasa_keyword2 %>%
+ pairwise_count(word, id, sort = TRUE, upper = FALSE)
+ title_word_pairs
+
+```
+
+
+
+
+
+```{r}
+library(ggplot2)
+ library(igraph)
+ library(ggraph)
+
+ set.seed(1234)
+ title_word_pairs %>%
+  filter(n >= 3) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "cyan4") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE,
+                 point.padding = unit(0.2, "lines")) +
+  theme_void()
+ 
+ 
+```
 
 
 
@@ -201,7 +462,135 @@ level_simpan_scope
 
 
 
+##########Coba data Judol
 
+
+```{r}
+library(readxl)
+
+data_judol <- read_xlsx("judol.xlsx")
+data_judol <- as.data.frame(data_judol)
+data_judol
+
+
+
+```
+
+
+
+
+
+```{r}
+
+
+data_judol2 <- data_judol[c("Keyword")]
+
+data_judol3 <- data_judol2
+
+for(i in 1 : length(data_judol2[,1]))
+{
+  
+  x <- data_judol2[i,1]
+  
+    simpan_keyword_hapus_spasi <- gsub(" ", "", x)
+    simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+    simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+    
+    data_judol3[i,1] = simpan_keyword_hapus_spasi
+    
+    
+  
+  
+}
+
+
+data_judol3
+```
+
+
+
+
+```{r}
+ library(tidytext)
+library(ggplot2)
+ library(igraph)
+ library(ggraph)
+ library(tidyr)
+
+
+library(dplyr)
+library(tidytext)
+library(widyr)
+ library(tidyr)
+
+library(widyr)
+
+ nasa_judol <- data_frame(id = c(1 :  length(data_judol3[,1])  ), 
+              keyword = data_judol3$Keyword ) %>% unnest(keyword)
+
+ nasa_judol <-  nasa_judol %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+ 
+nasa_judol
+
+
+```
+
+
+
+
+
+
+```{r}
+
+ library(widyr)
+ title_word_pairs <- nasa_judol %>%
+ pairwise_count(word, id, sort = TRUE, upper = FALSE)
+ title_word_pairs
+
+```
+
+
+
+
+
+```{r}
+library(ggplot2)
+ library(igraph)
+ library(ggraph)
+
+ set.seed(1234)
+ title_word_pairs %>%
+  filter(n >= 2) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "cyan4") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE,
+                 point.padding = unit(0.2, "lines")) +
+  theme_void()
+ 
+ 
+```
+
+
+
+
+
+```{r}
+
+ set.seed(1234)
+ title_word_pairs %>%
+ filter(n >= 2) %>%
+ graph_from_data_frame() %>%
+ ggraph(layout = "fr") +
+ geom_edge_link(aes(edge_alpha = n, edge_width = n),
+ edge_colour = "royalblue") +
+ geom_node_point(size = 5) +
+ geom_node_text(aes(label = name), repel = TRUE,
+ point.padding = unit(0.2, "lines")) +
+ theme_void()
+
+```
 
 
 
