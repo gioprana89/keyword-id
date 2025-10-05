@@ -594,6 +594,572 @@ library(ggplot2)
 
 
 
+```{r}
+library(igraph)
+library(tidygraph)
+library(ggraph)
+
+
+cooccur <-  title_word_pairs
+
+cooccur
+```
+
+
+
+```{r}
+
+wordnetwork <- head(cooccur, 20)
+wordnetwork <- graph_from_data_frame(wordnetwork)
+ggraph(wordnetwork, layout = "fr") +
+  geom_edge_link(aes(width = n, edge_alpha = n), edge_colour = "#ed9de9") +
+  geom_node_point(aes(size = igraph::degree(wordnetwork)), shape = 1, color = "black") +
+  geom_node_text(aes(label = name), col = "darkblue", size = 3) +
+  labs(title = "Co-occurrences within sentence",
+       subtitle = "Top 100 Nouns, Names, Adjectives, Verbs, Adverbs",
+       caption = "Surah Yusuf (Saheeh International)")
+
+```
+
+
+
+
+
+
+```{r}
+
+wordnetwork <- head(cooccur, 20)
+wordnetwork <- graph_from_data_frame(wordnetwork)
+ggraph(wordnetwork, layout = "fr") +
+  geom_edge_link(aes(width = 1, edge_alpha = 1), edge_colour = "#ed9de9") +
+  geom_node_point(aes(size = igraph::degree(wordnetwork)), shape = 1, color = "black") +
+  geom_node_text(aes(label = name), col = "darkblue", size = 3) +
+  labs(title = "Co-occurrences within sentence",
+       subtitle = "Top 100 Nouns, Names, Adjectives, Verbs, Adverbs",
+       caption = "Surah Yusuf (Saheeh International)")
+
+```
+
+
+
+
+
+
+
+
+```{r}
+
+wordnetwork <- head(cooccur, 50)
+wordnetwork <- graph_from_data_frame(wordnetwork)
+ggraph(wordnetwork, layout = "fr") +
+  geom_edge_link(aes(width = 1, edge_alpha = 1), edge_colour = "#ed9de9") +
+  geom_node_point(aes(size = igraph::degree(wordnetwork)), shape = 1, color = "black") +
+  geom_node_text(aes(label = name), col = "darkblue", size = 3) + theme(legend.position="none")
+
+
+```
+
+
+
+
+
+
+```{r}
+
+wordnetwork <- head(cooccur, 50)
+wordnetwork <- graph_from_data_frame(wordnetwork)
+ggraph(wordnetwork, layout = "fr") +
+  geom_edge_link(aes(width = n, edge_alpha = n), edge_colour = "#ed9de9") +
+  geom_node_point(aes(size = igraph::degree(wordnetwork)), shape = 1, color = "black") +
+  geom_node_text(aes(label = name), col = "darkblue", size = 3) + theme(legend.position="none")
+
+
+```
+
+
+
+
+
+```{r}
+
+wordnetwork <- head(cooccur, 30)
+gm1 <- graph_from_data_frame(wordnetwork)
+ggraph(gm1, layout = 'kk') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = degree(gm1)), colour = "#a83268") +
+      geom_node_text(aes(label = name), size = 3, repel=TRUE) +
+     theme(legend.position="none")
+
+
+
+```
+
+
+
+
+```{r}
+
+ggraph(gm1, layout = 'kk') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = degree(gm1)),
+                      colour = "#a83268") +   theme(legend.position="none")
+
+```
+
+
+
+
+
+
+
+
+```{r}
+
+ggraph(gm1, layout = 'linear', circular = TRUE) + 
+     geom_edge_arc(color = "orange", width=0.7) +
+     geom_node_point(aes(size = degree(gm1)), alpha = igraph::degree(gm1), 
+                     colour = "#a83268") +
+     geom_node_text(aes(label = name), size = 3, repel=TRUE) +
+     theme_void() +
+   theme(legend.position="none")
+
+```
+
+
+
+
+
+
+
+```{r}
+
+ggraph(gm1, layout = 'linear', circular = TRUE) + 
+     geom_edge_arc(color = "#57d3e6", width=0.7) +
+     geom_node_point(aes(size = degree(gm1)), alpha = igraph::degree(gm1), 
+                     colour = "#a83268") +
+     geom_node_text(aes(label = name), size = 3, repel=TRUE) +
+     theme_void() +
+   theme(legend.position="none")
+
+```
+
+
+
+
+
+
+```{r}
+
+wordnetwork <- head(cooccur, 100)
+jg <- graph_from_data_frame(wordnetwork)
+
+ggraph(jg, layout = 'kk') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = igraph::degree(jg)), 
+                      colour = "#a83268", show.legend = FALSE) +
+   theme(legend.position="none")
+
+```
+
+
+
+
+
+
+
+```{r}
+
+wordnetwork <- head(cooccur, 100)
+jg <- graph_from_data_frame(wordnetwork)
+
+ggraph(jg, layout = 'auto') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = igraph::degree(jg)), 
+                      colour = "#a83268", show.legend = FALSE) +
+   theme(legend.position="none")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+library(readxl)
+
+data_judol <- read_xlsx("judol.xlsx")
+data_judol <- as.data.frame(data_judol)
+data_judol
+
+
+
+```
+
+
+
+
+
+```{r}
+
+
+data_judol2 <- data_judol[c("Keyword")]
+
+data_judol3 <- data_judol2
+
+for(i in 1 : length(data_judol2[,1]))
+{
+  
+  x <- data_judol2[i,1]
+  
+    simpan_keyword_hapus_spasi <- gsub(" ", "", x)
+    simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+    simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+    
+    data_judol3[i,1] = simpan_keyword_hapus_spasi
+    
+    
+  
+  
+}
+
+
+data_judol3
+```
+
+
+
+
+```{r}
+
+library(ggplot2)
+ library(igraph)
+ library(ggraph)
+
+
+
+library(dplyr)
+library(tidytext)
+library(widyr)
+ library(tidyr)
+
+
+
+ nasa_judol <- data_frame(id = c(1 :  length(data_judol3[,1])  ), 
+              keyword = data_judol3$Keyword ) %>% unnest(keyword)
+
+ nasa_judol <-  nasa_judol %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+ 
+nasa_judol
+
+
+```
+
+
+
+
+
+
+```{r}
+
+ library(widyr)
+ title_word_pairs <- nasa_judol %>%
+ pairwise_count(word, id, sort = TRUE, upper = FALSE)
+ title_word_pairs
+
+library(igraph)
+library(tidygraph)
+library(ggraph)
+
+
+cooccur <-  title_word_pairs
+
+```
+
+
+
+
+```{r}
+library(ggthemes)
+wordnetwork <- head(cooccur, 30)
+gm1 <- graph_from_data_frame(wordnetwork)
+ggraph(gm1, layout = 'kk') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = degree(gm1)), colour = "#a83268") +
+      geom_node_text(aes(label = name), size = 3, repel=TRUE) +
+     theme(legend.position="none") + theme_classic()
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+
+library(readxl)
+
+data_paper <- read_xlsx("data_paper.xlsx")
+data_paper <- as.data.frame(data_paper)
+
+
+
+dat <- data_paper
+
+dat
+```
+
+
+
+```{r}
+ cek_keyword = "financial performance"
+    
+    simpan_indeks <- vector(mode = "numeric")
+    simpan_kata <- vector(mode = "character")
+    k = 0
+    data_keyword <- dat[,"Keyword"]
+    
+    for(i in 1 : length(data_keyword))
+    {
+      
+      X <- data_keyword[i]
+      
+      
+      
+      X <- tolower(X) #mengubah menjadi huruf kecil
+      cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      
+      ada_keyword <- cek_keyword %in% X
+      
+      if(ada_keyword == TRUE)
+      {
+        k = k + 1
+        simpan_indeks[k] = i
+        simpan_kata[k] = print(paste(X,collapse='; '))
+        
+      }
+      
+    }
+    
+    
+    dframe_indeks_keywords <- data.frame(simpan_indeks, simpan_kata)
+    colnames(dframe_indeks_keywords) = c("Nomor Paper", "Kata Kunci")
+
+    
+    dframe_indeks_keywords
+    
+
+```
+
+
+
+```{r}
+v <- c('A','B','C','D')
+print(v)
+print(paste(v,collapse='; '))
+print(paste(v))
+
+```
+
+
+
+
+
 
 
 

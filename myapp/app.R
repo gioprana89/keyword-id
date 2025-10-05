@@ -6,15 +6,27 @@ library(stringr)
 library(shiny)
 library(ggthemes)
 library(dplyr)
-
-
+library(tidyr)
+library(igraph)
+library(ggraph)
 
 library(tidytext)
 
 library(wordcloud)
 
+library(widyr)
+library(ggthemes)
+
+library(tidygraph)
+#library(tidyverse)
 
 
+
+
+
+
+
+           
 
 #library(shinyAce)
 #source("chooser.R")
@@ -150,7 +162,63 @@ connected_paper_by_keyword_ui <- function(id) {
               
               
               
+              fluidRow(
+                column(4,
+                       
+                       
+                       
+                       
+                       sliderInput(ns("grafik_coocur_jumlah_coocur_keseluruhan_ya"), "number of co-occurrences:",
+                                   min = 1, max = 1000,
+                                   value = 100),
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                column(4,
+                       
+                       
+                       sliderInput(ns("grafik_coocur_ukuran_teks_keseluruhan_ya"), "text size:",
+                                   min = 1, max = 20,
+                                   value = 5, step = 0.1),
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                column(4,
+                       
+                       radioButtons(ns("grafik_coocur_tipe_grafik_keseluruhan_ya"),
+                                    
+                                    "Type of Graph:", 
+                                    c("1" = "1", "2"="2",
+                                      "3"="3", "4"="4", "5" = "5"), inline=TRUE, selected = "1"   ),
+                       
+                       
+                       
+                       
+                       br()
+                       
+                       
+                )
+                
+                
+                
+              ),
               
+              
+              shinycssloaders::withSpinner(plotOutput(ns("grafik_pemetaan_kata_kunci_keseluruhan"), width = "100%", height = "900px" )),
+              
+              
+              br(),
+              br(),
               
               
               #######################Analisis Wordcloud
@@ -247,11 +315,7 @@ connected_paper_by_keyword_ui <- function(id) {
               
               
               
-              
-              
-              
-              
-              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud_full"))  ),
+              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud_full"), width = "100%", height = "900px" ) ),
               
               
               
@@ -315,7 +379,7 @@ connected_paper_by_keyword_ui <- function(id) {
               
               textInput(ns("get_keyword"),
                         "Input One Keyword", 
-                        "Online Gambling"),
+                        "financial performance"),
               
               br(),
               
@@ -1015,10 +1079,654 @@ connected_paper_by_keyword_ui <- function(id) {
               
               
               
-              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"))  ),
+              shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"), width = "100%", height = "900px")  ),
               
               
               #shinycssloaders::withSpinner(plotOutput(ns("grafik_wordcloud"), width = "1400px", height = "900px" )),
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              br(),
+              
+              br(),
+              
+              br(),
+              
+              
+              
+              fluidRow(
+                column(4,
+                       
+                       
+                       
+                       
+                       sliderInput(ns("grafik_coocur_jumlah_coocur"), "number of co-occurrences:",
+                                   min = 1, max = 1000,
+                                   value = 20),
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                column(4,
+                       
+                       
+                       sliderInput(ns("grafik_coocur_ukuran_teks"), "text size:",
+                                   min = 1, max = 20,
+                                   value = 3, step = 0.1),
+                       
+                       
+                       br()
+                       
+                       
+                ),
+                
+                
+                column(4,
+                       
+                       radioButtons(ns("grafik_coocur_tipe_grafik"),
+                                    
+                                    "Type of Graph:", 
+                                    c("1" = "1", "2"="2",
+                                      "3"="3", "4"="4", "5" = "5"), inline=TRUE, selected = "1"   ),
+                       
+                       
+                       
+                       
+                       br()
+                       
+                       
+                )
+                
+                
+                
+              ),
+              
+              ##########5 Oktober 2025############
+              
+              
+              
+              
+              
+              
+              #shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci_1"), width = "100%" )),
+              
+              
+              
+              
+              
+              tabsetPanel(
+                
+                
+                tabPanel("300 x 300",
+                         
+                         #actionButton(ns('cetak_gambar_300_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_300_300_type1"), width = "300px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 300",
+                         
+                         
+                         #actionButton(ns('cetak_gambar_500_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_500_300_type1"), width = "500px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 300",
+                         
+                         
+                      #   actionButton(ns('cetak_gambar_700_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_700_300_type1"), width = "700px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 300",
+                         
+                         
+                      #   actionButton(ns('cetak_gambar_900_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_900_300_type1"), width = "900px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 300",
+                         
+                         
+                       #  actionButton(ns('cetak_gambar_1100_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1100_300_type1"), width = "1100px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 300",
+                         
+                         
+                       #  actionButton(ns('cetak_gambar_1200_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1200_300_type1"), width = "1200px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 300",
+                         
+                       #  actionButton(ns('cetak_gambar_1300_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1300_300_type1"), width = "1300px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 300",
+                         
+                       #  actionButton(ns('cetak_gambar_1400_300_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1400_300_type1"), width = "1400px", height = "300px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                tabPanel("300 x 500",
+                         
+                       #  actionButton(ns('cetak_gambar_300_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_300_500_type1"), width = "300px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 500",
+                         
+                         
+                       #  actionButton(ns('cetak_gambar_500_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_500_500_type1"), width = "500px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 500",
+                         
+                         
+                       #  actionButton(ns('cetak_gambar_700_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_700_500_type1"), width = "700px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 500",
+                         
+                         
+                      #   actionButton(ns('cetak_gambar_900_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_900_500_type1"), width = "900px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 500",
+                         
+                         
+                       #  actionButton(ns('cetak_gambar_1100_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1100_500_type1"), width = "1100px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 500",
+                         
+                         
+                     #    actionButton(ns('cetak_gambar_1200_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1200_500_type1"), width = "1200px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 500",
+                         
+                    #     actionButton(ns('cetak_gambar_1300_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1300_500_type1"), width = "1300px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 500",
+                         
+                     #    actionButton(ns('cetak_gambar_1400_500_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1400_500_type1"), width = "1400px", height = "500px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                tabPanel("300 x 700",
+                         
+                      #   actionButton(ns('cetak_gambar_300_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_300_700_type1"), width = "300px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 700",
+                         
+                         
+                     #    actionButton(ns('cetak_gambar_500_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_500_700_type1"), width = "500px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 700",
+                         
+                         
+                    #     actionButton(ns('cetak_gambar_700_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_700_700_type1"), width = "700px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 700",
+                         
+                         
+                   #      actionButton(ns('cetak_gambar_900_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_900_700_type1"), width = "900px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 700",
+                         
+                         
+                     #    actionButton(ns('cetak_gambar_1100_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1100_700_type1"), width = "1100px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 700",
+                         
+                         
+                     #    actionButton(ns('cetak_gambar_1200_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1200_700_type1"), width = "1200px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 700",
+                         
+                     #    actionButton(ns('cetak_gambar_1300_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1300_700_type1"), width = "1300px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 700",
+                         
+                     #    actionButton(ns('cetak_gambar_1400_700_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1400_700_type1"), width = "1400px", height = "700px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("300 x 900",
+                         
+                    #     actionButton(ns('cetak_gambar_300_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_300_900_type1"), width = "300px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("500 x 900",
+                         
+                         
+                   #      actionButton(ns('cetak_gambar_500_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_500_900_type1"), width = "500px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("700 x 900",
+                         
+                         
+                     #    actionButton(ns('cetak_gambar_700_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_700_900_type1"), width = "700px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                
+                tabPanel("900 x 900",
+                         
+                         
+                     #    actionButton(ns('cetak_gambar_900_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_900_900_type1"), width = "900px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1100 x 900",
+                         
+                         
+                    #     actionButton(ns('cetak_gambar_1100_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1100_900_type1"), width = "1100px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1200 x 900",
+                         
+                         
+                    #     actionButton(ns('cetak_gambar_1200_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1200_900_type1"), width = "1200px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                tabPanel("1300 x 900",
+                         
+                     #    actionButton(ns('cetak_gambar_1300_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1300_900_type1"), width = "1300px", height = "900px" )),
+                         
+                         br()
+                         
+                ),
+                
+                
+                
+                tabPanel("1400 x 900",
+                         
+                     #    actionButton(ns('cetak_gambar_1400_900_type1'),'Print'),
+                         
+                         br(),
+                         
+                         shinycssloaders::withSpinner(plotOutput(ns("pemetaan_kata_kunci1_1400_900_type1"), width = "1400px", height = "900px" )),
+                         
+                         br()
+                         
+                )
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+              ), #akhir dari tabset panel
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
               
               
               
@@ -3904,6 +4612,1195 @@ p <-    simpan_kata %>%
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##################Grafik Pemetaan Kata Kunci: 5 Oktober 2025
+  ##################Grafik Pemetaan Kata Kunci: 5 Oktober 2025
+  ##################Grafik Pemetaan Kata Kunci: 5 Oktober 2025
+  ##################Grafik Pemetaan Kata Kunci: 5 Oktober 2025
+  ##################Grafik Pemetaan Kata Kunci: 5 Oktober 2025
+  
+  
+  
+  
+  ###########Grafik Pemetaan Kata Kunci Keseluruhan##############
+  
+  
+  
+  
+  output$grafik_pemetaan_kata_kunci_keseluruhan<- renderPlot({
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    ambil_kata_kunci <- dat[c("Keywords")]
+    
+    
+    
+    for(i in 1 : length(ambil_kata_kunci[,1]))
+    {
+      
+      x <- ambil_kata_kunci[i,1]
+      
+      simpan_keyword_hapus_spasi <- gsub(" ", "", x)
+      simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+      simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+      
+      ambil_kata_kunci[i,1] = simpan_keyword_hapus_spasi
+      ambil_kata_kunci[i,1] = tolower(ambil_kata_kunci[i,1])
+      
+      
+      
+    }
+    
+    
+    data_keywords_terpilih_new <- ambil_kata_kunci
+    
+    
+    nasa_judol <- data_frame(id = c(1 :  length(data_keywords_terpilih_new[,1])  ), 
+                             keyword = data_keywords_terpilih_new$Keywords ) %>% unnest(keyword)
+    
+    nasa_judol <-  nasa_judol %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+    
+    title_word_pairs <- nasa_judol %>%
+      pairwise_count(word, id, sort = TRUE, upper = FALSE)
+    
+    
+    gambar = 0    
+    
+    # print(title_word_pairs)
+    
+    
+    nasa_judol <- data_frame(id = c(1 :  length(data_keywords_terpilih_new[,1])  ), 
+                             keyword = data_keywords_terpilih_new$Keywords ) %>% unnest(keyword)
+    
+    nasa_judol <-  nasa_judol %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+    
+    title_word_pairs <- nasa_judol %>%
+      pairwise_count(word, id, sort = TRUE, upper = FALSE)
+    
+    
+    gambar = 0    
+    
+    # print(title_word_pairs)
+    
+    cooccur <-  title_word_pairs
+    
+    
+    wordnetwork <- head(cooccur, input$grafik_coocur_jumlah_coocur_keseluruhan_ya)
+    gm1 <- graph_from_data_frame(wordnetwork)
+    gambar1 <- ggraph(gm1, layout = 'kk') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = degree(gm1)), colour = "#a83268") +
+      geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks_keseluruhan_ya, repel=TRUE) +
+      theme(legend.position="none")
+    
+    
+    
+    gambar2 <- ggraph(gm1, layout = 'kk') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = degree(gm1)), colour = "#a83268") +
+      geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks_keseluruhan_ya, repel=TRUE) + theme_classic() +
+      theme(legend.position="none")
+    
+    
+    
+    
+    
+    
+    gambar3 <- ggraph(gm1, layout = 'linear', circular = TRUE) + 
+      geom_edge_arc(color = "orange", width=0.7) +
+      geom_node_point(aes(size = degree(gm1)), alpha = igraph::degree(gm1), 
+                      colour = "#a83268") +
+      geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks_keseluruhan_ya, repel=TRUE) +
+      theme_classic() +
+      theme(legend.position="none")
+    
+    
+    
+    
+    gambar4 <- ggraph(gm1, layout = 'linear', circular = TRUE) + 
+      geom_edge_arc(color = "#57d3e6", width=0.7) +
+      geom_node_point(aes(size = degree(gm1)), alpha = igraph::degree(gm1), 
+                      colour = "#a83268") +
+      geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks_keseluruhan_ya, repel=TRUE) +
+      theme_classic() +
+      theme(legend.position="none")
+    
+    
+    
+    
+    
+    wordnetwork2 <- head(cooccur, input$grafik_coocur_jumlah_coocur_keseluruhan_ya)
+    wordnetwork2 <- graph_from_data_frame(wordnetwork2)
+    gambar5 <- ggraph(wordnetwork2, layout = "fr") +
+      geom_edge_link(aes(width = n, edge_alpha = n), edge_colour = "#ed9de9") +
+      geom_node_point(aes(size = igraph::degree(wordnetwork2)), shape = 1, color = "black") +
+      geom_node_text(aes(label = name), col = "darkblue", size = input$grafik_coocur_ukuran_teks_keseluruhan_ya) +
+      theme_classic() +
+      theme(legend.position="none")
+    
+    
+    
+    
+    # gm1 <- igraph::as_data_frame(wordnetwork)
+    #gm1 <- graph_from_data_frame(wordnetwork)
+    
+    #print("ugiiiiiiiiii")
+    #print(wordnetwork)
+    
+    
+    if(input$grafik_coocur_tipe_grafik_keseluruhan_ya == "1")
+    {
+      gambar = gambar1
+    }
+    
+    
+    if(input$grafik_coocur_tipe_grafik_keseluruhan_ya == "2")
+    {
+      gambar = gambar2
+    }
+    
+    
+    if(input$grafik_coocur_tipe_grafik_keseluruhan_ya == "3")
+    {
+      gambar = gambar3
+    }
+    
+    
+    
+    if(input$grafik_coocur_tipe_grafik_keseluruhan_ya == "4")
+    {
+      gambar = gambar4
+    }
+    
+    
+    if(input$grafik_coocur_tipe_grafik_keseluruhan_ya == "5")
+    {
+      gambar = gambar5
+    }
+    
+    
+    
+    
+    
+    
+    print(gambar)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ################
+  ################
+  
+  
+  
+  output$pemetaan_kata_kunci_1 <- renderPlot({
+    
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    cek_keyword = input$get_keyword
+    
+    simpan_indeks <- vector(mode = "numeric")
+    simpan_kata <- vector(mode = "character")
+    k = 0
+    data_keyword <- dat[,"Keywords"]
+    
+    for(i in 1 : length(data_keyword))
+    {
+      
+      X <- data_keyword[i]
+      
+      X <- tolower(X) #mengubah menjadi huruf kecil
+      cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      
+      ada_keyword <- cek_keyword %in% X
+      
+      if(ada_keyword == TRUE)
+      {
+        k = k + 1
+        simpan_indeks[k] = i
+        simpan_kata <- c(simpan_kata, X)
+        
+      }
+      
+    }
+    
+    
+    
+  
+    
+    data_keywords_terpilih <- dat[c(simpan_indeks),]
+    
+    
+    data_keywords_terpilih_new <- data_keywords_terpilih[c("Keywords")]
+    
+    
+
+    
+    
+    for(i in 1 : length(data_keywords_terpilih_new[,1]))
+    {
+      
+      x <- data_keywords_terpilih_new[i,1]
+      
+      simpan_keyword_hapus_spasi <- gsub(" ", "", x)
+      simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+      simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+      
+      data_keywords_terpilih_new[i,1] = simpan_keyword_hapus_spasi
+      
+      
+      
+      
+    }
+    
+    
+    
+    
+    
+    
+    
+    nasa_judol <- data_frame(id = c(1 :  length(data_keywords_terpilih_new[,1])  ), 
+                             keyword = data_keywords_terpilih_new$Keywords ) %>% unnest(keyword)
+    
+    nasa_judol <-  nasa_judol %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+    
+    title_word_pairs <- nasa_judol %>%
+      pairwise_count(word, id, sort = TRUE, upper = FALSE)
+    
+    
+   
+    
+    cooccur <-  title_word_pairs
+    
+    wordnetwork <- head(cooccur, 10)
+    wordnetwork <- graph_from_data_frame(wordnetwork)
+    gambar <- ggraph(wordnetwork, layout = "fr") +
+      geom_edge_link(aes(width = n, edge_alpha = n), edge_colour = "#ed9de9") +
+      geom_node_point(aes(size = igraph::degree(wordnetwork)), shape = 1, color = "black") +
+      geom_node_text(aes(label = name), col = "darkblue", size = 3) + theme(legend.position="none")
+    
+    
+    print(gambar)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##################
+  
+  
+  
+  fungsi_kirim_grafik_pemetaan_kata_kunci1 <- function()
+  {
+    
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    cek_keyword = input$get_keyword
+    
+    simpan_indeks <- vector(mode = "numeric")
+    simpan_kata <- vector(mode = "character")
+    k = 0
+    data_keyword <- dat[,"Keywords"]
+    
+    for(i in 1 : length(data_keyword))
+    {
+      
+      X <- data_keyword[i]
+      
+      X <- tolower(X) #mengubah menjadi huruf kecil
+      cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      
+      ada_keyword <- cek_keyword %in% X
+      
+      if(ada_keyword == TRUE)
+      {
+        k = k + 1
+        simpan_indeks[k] = i
+        simpan_kata <- c(simpan_kata, X)
+        
+      }
+      
+    }
+    
+    
+    
+    
+    
+    data_keywords_terpilih <- dat[c(simpan_indeks),]
+    
+    
+    data_keywords_terpilih_new <- data_keywords_terpilih[c("Keywords")]
+    
+    
+    
+    
+    
+    for(i in 1 : length(data_keywords_terpilih_new[,1]))
+    {
+      
+      x <- data_keywords_terpilih_new[i,1]
+      
+      simpan_keyword_hapus_spasi <- gsub(" ", "", x)
+      simpan_keyword_hapus_spasi <- gsub("-", "", simpan_keyword_hapus_spasi)
+      simpan_keyword_hapus_spasi <- gsub("'", "", simpan_keyword_hapus_spasi)
+      
+      data_keywords_terpilih_new[i,1] = simpan_keyword_hapus_spasi
+      
+      
+      
+      
+    }
+    
+    
+    
+    
+    
+    nasa_judol <- data_frame(id = c(1 :  length(data_keywords_terpilih_new[,1])  ), 
+                             keyword = data_keywords_terpilih_new$Keywords ) %>% unnest(keyword)
+    
+    nasa_judol <-  nasa_judol %>%  unnest_tokens(word, keyword) %>%  anti_join(stop_words)
+    
+    title_word_pairs <- nasa_judol %>%
+      pairwise_count(word, id, sort = TRUE, upper = FALSE)
+    
+
+    gambar = 0    
+    
+   # print(title_word_pairs)
+    
+    cooccur <-  title_word_pairs
+    
+
+    wordnetwork <- head(cooccur, input$grafik_coocur_jumlah_coocur)
+    gm1 <- graph_from_data_frame(wordnetwork)
+   gambar1 <- ggraph(gm1, layout = 'kk') + 
+      geom_edge_density(aes(fill = n)) + 
+      geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+      geom_node_point(aes(size = degree(gm1)), colour = "#a83268") +
+      geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks, repel=TRUE) +
+      theme(legend.position="none")
+    
+   
+   
+   gambar2 <- ggraph(gm1, layout = 'kk') + 
+     geom_edge_density(aes(fill = n)) + 
+     geom_edge_link(alpha = 0.7, color = "#57d3e6") +
+     geom_node_point(aes(size = degree(gm1)), colour = "#a83268") +
+     geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks, repel=TRUE) + theme_classic() +
+     theme(legend.position="none")
+   
+   
+   
+   
+   
+   
+   gambar3 <- ggraph(gm1, layout = 'linear', circular = TRUE) + 
+     geom_edge_arc(color = "orange", width=0.7) +
+     geom_node_point(aes(size = degree(gm1)), alpha = igraph::degree(gm1), 
+                     colour = "#a83268") +
+     geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks, repel=TRUE) +
+     theme_classic() +
+     theme(legend.position="none")
+   
+   
+   
+   
+   gambar4 <- ggraph(gm1, layout = 'linear', circular = TRUE) + 
+     geom_edge_arc(color = "#57d3e6", width=0.7) +
+     geom_node_point(aes(size = degree(gm1)), alpha = igraph::degree(gm1), 
+                     colour = "#a83268") +
+     geom_node_text(aes(label = name), size = input$grafik_coocur_ukuran_teks, repel=TRUE) +
+     theme_classic() +
+     theme(legend.position="none")
+   
+   
+   
+   
+   
+   wordnetwork2 <- head(cooccur, input$grafik_coocur_jumlah_coocur)
+   wordnetwork2 <- graph_from_data_frame(wordnetwork2)
+   gambar5 <- ggraph(wordnetwork2, layout = "fr") +
+     geom_edge_link(aes(width = n, edge_alpha = n), edge_colour = "#ed9de9") +
+     geom_node_point(aes(size = igraph::degree(wordnetwork2)), shape = 1, color = "black") +
+     geom_node_text(aes(label = name), col = "darkblue", size = input$grafik_coocur_ukuran_teks) +
+     theme_classic() +
+     theme(legend.position="none")
+   
+   
+   
+    
+   # gm1 <- igraph::as_data_frame(wordnetwork)
+    #gm1 <- graph_from_data_frame(wordnetwork)
+    
+#print("ugiiiiiiiiii")
+#print(wordnetwork)
+    
+    
+    if(input$grafik_coocur_tipe_grafik == "1")
+    {
+      gambar = gambar1
+    }
+    
+    
+    if(input$grafik_coocur_tipe_grafik == "2")
+    {
+      gambar = gambar2
+    }
+    
+    
+    if(input$grafik_coocur_tipe_grafik == "3")
+    {
+      gambar = gambar3
+    }
+    
+   
+   
+   if(input$grafik_coocur_tipe_grafik == "4")
+   {
+     gambar = gambar4
+   }
+   
+   
+   if(input$grafik_coocur_tipe_grafik == "5")
+   {
+     gambar = gambar5
+   }
+   
+    
+    return(gambar)
+    
+  }
+  
+  
+  
+  
+  #################
+  
+  
+  
+  
+  
+  
+  ##########300 x 300
+  
+  output$pemetaan_kata_kunci1_300_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########500 x 300
+  
+  output$pemetaan_kata_kunci1_500_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########700 x 300
+  
+  output$pemetaan_kata_kunci1_700_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########900 x 300
+  
+  output$pemetaan_kata_kunci1_900_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1100 x 300
+  
+  output$pemetaan_kata_kunci1_1100_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1200 x 300
+  
+  output$pemetaan_kata_kunci1_1200_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1300 x 300
+  
+  output$pemetaan_kata_kunci1_1300_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  ##########1400 x 300
+  
+  output$pemetaan_kata_kunci1_1400_300_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########300 x 500
+  
+  output$pemetaan_kata_kunci1_300_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  ##########500 x 500
+  
+  output$pemetaan_kata_kunci1_500_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########700 x 500
+  
+  output$pemetaan_kata_kunci1_700_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  ##########900 x 500
+  
+  output$pemetaan_kata_kunci1_900_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1100 x 500
+  
+  output$pemetaan_kata_kunci1_1100_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1200 x 500
+  
+  output$pemetaan_kata_kunci1_1200_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1300 x 500
+  
+  output$pemetaan_kata_kunci1_1300_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  ##########1400 x 500
+  
+  output$pemetaan_kata_kunci1_1400_500_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########300 x 700
+  
+  output$pemetaan_kata_kunci1_300_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  ##########500 x 700
+  
+  output$pemetaan_kata_kunci1_500_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########700 x 700
+  
+  output$pemetaan_kata_kunci1_700_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  ##########900 x 700
+  
+  output$pemetaan_kata_kunci1_900_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1100 x 700
+  
+  output$pemetaan_kata_kunci1_1100_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1200 x 700
+  
+  output$pemetaan_kata_kunci1_1200_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1300 x 700
+  
+  output$pemetaan_kata_kunci1_1300_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  ##########1400 x 700
+  
+  output$pemetaan_kata_kunci1_1400_700_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  ##########300 x 900
+  
+  output$pemetaan_kata_kunci1_300_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  ##########500 x 900
+  
+  output$pemetaan_kata_kunci1_500_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########700 x 900
+  
+  output$pemetaan_kata_kunci1_700_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########900 x 900
+  
+  output$pemetaan_kata_kunci1_900_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1100 x 900
+  
+  output$pemetaan_kata_kunci1_1100_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1200 x 900
+  
+  output$pemetaan_kata_kunci1_1200_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##########1300 x 900
+  
+  output$pemetaan_kata_kunci1_1300_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  ##########1400 x 900
+  
+  output$pemetaan_kata_kunci1_1400_900_type1 <- renderPlot({
+    
+    p <- fungsi_kirim_grafik_pemetaan_kata_kunci1()
+    
+    print(p)
+    
+    
+  })
   
   
   
