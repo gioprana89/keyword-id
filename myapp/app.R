@@ -137,6 +137,54 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      
+     tabPanel(title = tags$h5( tags$img(src = "selected journal new.gif", width = "30px"), 'Selected Journal'),
+              
+              
+              h1("Selected Journal",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+              
+              br(),
+              
+              shinycssloaders::withSpinner(verbatimTextOutput(ns("informasi_cetak"))),
+              
+              
+              
+              
+              
+              br(),
+              
+              shinycssloaders::withSpinner(uiOutput(ns("tampilkan_informasi_semua_jurnal_dan_jumlah_artikel"))),
+              
+              
+              
+              
+              br(),
+              
+              
+           
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                       
+              
+              
+              
+              br()       
+              
+     ),
      
      
      
@@ -145,6 +193,13 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      tabPanel(title = tags$h5( tags$img(src = "katakunci-unscreen.gif", width = "30px"), 'Available Keywords'),
+              
+              
+              
+              shinycssloaders::withSpinner(verbatimTextOutput(ns("informasi_cetak_untuk_tab_available_keywords"))),
+              
+              
+              br(),
               
               
               h1("Available Keywords",style="text-shadow: -1px 0 blue,
@@ -2049,6 +2104,343 @@ connected_paper_by_keyword_ui <- function(id) {
 connected_paper_by_keyword_server <- function(input, output, session) {
   
   
+  ##############11 Oktober 2025###############
+  
+  
+  fungsi_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel <- function()
+  {
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    grup <- group_by(dat, `Name of Journal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+    
+    
+    informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+    
+    for( i in 1 : length(data_jurnal[,1]))
+    {
+      
+      nama <- data_jurnal[i,"Journal"]
+      issn <- data_jurnal[i,"ISSN"]
+      jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+      informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"--",issn," (",jumlah,")")
+      
+    }
+    
+    data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+    colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+    
+    
+    return(informasi_jurnal_jumlah_artikel)
+    
+    
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ##############
+  
+  
+  
+  
+  output$tampilkan_informasi_semua_jurnal_dan_jumlah_artikel <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel"), 
+                       label="Select Journal(s):", choices = c( fungsi_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel()), 
+                       selected=c( fungsi_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel()   ), inline = TRUE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  output$informasi_cetak <- renderPrint({
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
+    
+    
+    cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    print(jurnal_terpilih)
+    
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+  })
+  
+  
+  
+  
+  #################
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -2057,6 +2449,179 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   
   
   
+  
+  output$informasi_cetak_untuk_tab_available_keywords <- renderPrint({
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
+    
+    
+    ambil_keyword <- dat[,"Keywords"]
+    ambil_keyword <- as.data.frame(ambil_keyword)
+    
+    simpan_keyword <- vector(mode = "character")
+    
+    
+    for(i in 1 :  length(ambil_keyword[,1])  )
+    {
+      
+      X <- ambil_keyword[i,1]
+      
+      X <- tolower(X) #mengubah menjadi huruf kecil
+      
+      
+      X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), "; ", fixed = TRUE))
+      X <- unlist(strsplit(as.character(X), ";", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ", ", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), "  ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), " ,", fixed = TRUE))
+      #X <- unlist(strsplit(as.character(X), ",", fixed = TRUE))
+      
+      
+      simpan_keyword = c(simpan_keyword, X)
+      
+      
+      
+      
+    }
+    
+    
+    
+    
+    
+    tabel <- table(simpan_keyword)
+    nama <- names(tabel)
+    
+    frekuensi <- unlist(tabel)
+    names(frekuensi) <- NULL
+    
+    frekuensi <- unlist(frekuensi)
+    frekuensi <- as.numeric(frekuensi)
+    
+    
+    
+    
+    
+    persentase <- frekuensi / sum(frekuensi) * 100
+    
+    persentase <- round(persentase, digits = 2)
+    
+    nama <- unlist(nama)
+    
+    
+    data_tabel <- data.frame(nama, frekuensi, persentase)
+    
+    colnames(data_tabel) <- c("Keywords", "Frequency", "Percentage (%)")
+    
+    
+    cat(sprintf("Number of Keywords: %d",  length(data_tabel[,"Keywords"])     ))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #########################
   
   
   
@@ -2369,12 +2934,70 @@ print(data_jurnal)
     
     output$katakunci_yang_tersedia <- DT::renderDT({
       
+      
+      
+      
       dat <- read_xlsx("data_paper.xlsx")
       dat <- as.data.frame(dat)
       
       colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                         "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                         "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+      
+      
+      
+      
+      
+      jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+      
+      #print(jurnal_terpilih)
+      
+      
+      
+      cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+      
+      
+      
+      simpan_nama_jurnal_terpilih <- ""
+      
+      
+      for(i in 1 : length(jurnal_terpilih))
+      {
+        a <-  strsplit(jurnal_terpilih[i], "--")
+        
+        simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+      }
+      
+      
+      
+      #print(simpan_nama_jurnal_terpilih)
+      
+      indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+      indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+      
+      
+      jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+      
+      cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+      
+      
+      
+      
+      
+      
+      
+      
+      #######Dengan jumlah keywords
+      
+      dat <- dat[c(indeks_jurnal_terpilih),]
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       
@@ -2521,12 +3144,67 @@ print(data_jurnal)
   fungsi_hitung_artikel_terpilih <- function()
   {
     
+    
+    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
+    
+    
+    
+    
+    
     
     cek_keyword = input$get_keyword
     
@@ -2701,11 +3379,65 @@ print(data_jurnal)
   {
     
     
+    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
+    
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
+    
+    
+    
+    
     
     cek_keyword = input$get_keyword
     
@@ -4169,12 +4901,60 @@ print(data_jurnal)
   output$distribusi_frekuensi_data_keywords <- DT::renderDT({
     
     
-    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
+    
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
     
     cek_keyword = input$get_keyword
     
@@ -4302,13 +5082,60 @@ print(data_jurnal)
   {
     
     
-    
-    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
+    
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
     
     cek_keyword = input$get_keyword
     
@@ -4458,13 +5285,60 @@ p <-    simpan_kata %>%
     
 
     
-    
-    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
+    
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
     
     cek_keyword = input$get_keyword
     
@@ -4673,6 +5547,53 @@ p <-    simpan_kata %>%
     
     
     
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
+    
+    
     ambil_kata_kunci <- dat[c("Keywords")]
     
     
@@ -4848,13 +5769,60 @@ p <-    simpan_kata %>%
   output$pemetaan_kata_kunci_1 <- renderPlot({
     
     
-    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
     
     cek_keyword = input$get_keyword
     
@@ -4975,13 +5943,60 @@ p <-    simpan_kata %>%
   {
     
     
-    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    
+    
+    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    #print(jurnal_terpilih)
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######Dengan jumlah keywords
+    
+    dat <- dat[c(indeks_jurnal_terpilih),]
+    
     
     cek_keyword = input$get_keyword
     

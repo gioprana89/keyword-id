@@ -1164,3 +1164,163 @@ print(paste(v))
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+library(readxl)
+
+data_paper <- read_xlsx("data_paper.xlsx")
+data_paper <- as.data.frame(data_paper)
+data_paper
+
+```
+
+
+
+```{r}
+
+levels(as.factor(data_paper[,"Scope"]))
+
+```
+
+
+
+
+```{r}
+
+A <- c("Economy", "Health", "Economy")
+
+which(A == "Economy")
+
+```
+
+
+
+
+#Economy
+```{r}
+
+A <- c("Economy", "Health", "Economy", "Religion", "Economy", "Science")
+
+bidang <- c("Economy", "Science")
+
+A %in% bidang
+
+```
+
+
+
+```{r}
+library(readxl)
+data_paper <- read_xlsx("data_paper.xlsx")
+data_paper <- as.data.frame(data_paper)
+data_paper
+```
+
+
+
+
+```{r}
+library(readxl)
+data_paper <- read_xlsx("data_paper.xlsx")
+data_paper <- as.data.frame(data_paper)
+
+
+library(dplyr)
+
+grup <- group_by(data_paper, `Nama Jurnal`, ISSN)
+
+data_jurnal <- grup %>% summarise(
+		freq = n()
+
+)
+
+data_jurnal <- as.data.frame(data_jurnal)
+
+colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+
+data_jurnal
+
+```
+
+
+
+
+
+```{r}
+
+informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+
+for( i in 1 : length(data_jurnal[,1]))
+{
+  
+  nama <- data_jurnal[i,"Journal"]
+  issn <- data_jurnal[i,"ISSN"]
+  jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+  informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"-",issn," (",jumlah,")")
+  
+}
+
+data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+
+
+data_jurnal_update
+
+
+```
+
+
+
+
+```{r}
+X <- c("As--123 (31)", "Dxc-dfr--115 (45)")
+
+
+simpan_nama <- ""
+
+
+for(i in 1 : length(X))
+{
+a <-  strsplit(X[i], "--")
+
+ simpan_nama[i] <- a[[1]][1]
+}
+
+
+simpan_nama
+
+
+```
+
+
+
