@@ -153,7 +153,154 @@ connected_paper_by_keyword_ui <- function(id) {
               
               br(),
               
-              shinycssloaders::withSpinner(uiOutput(ns("tampilkan_informasi_semua_jurnal_dan_jumlah_artikel"))),
+              #shinycssloaders::withSpinner(uiOutput(ns("tampilkan_informasi_semua_jurnal_dan_jumlah_artikel"))),
+              
+              
+              br(),
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              fluidRow(
+                column(4,
+                       
+                       uiOutput(ns("tampilkan_nama_jurnal_kesehatan")),
+                       
+                       br()
+                       
+                ),
+                
+                
+                
+                column(4,
+                       
+                       
+                       uiOutput(ns("tampilkan_nama_jurnal_psikologi")),
+                       
+                       br()
+                       
+                ),
+                
+                
+                
+                column(4,
+                       
+                       uiOutput(ns("tampilkan_nama_jurnal_ekonomi")),
+                       
+                       br()
+                       
+                )
+                
+                
+                
+                
+                
+              ), #Akhir Fluidrow
+              
+              
+              
+           
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              fluidRow(
+                column(4,
+                       
+                       uiOutput(ns("tampilkan_nama_jurnal_agama_dan_hukum")),
+                       
+                       br()
+                       
+                ),
+                
+                
+                
+                column(4,
+                       
+                       
+                       uiOutput(ns("tampilkan_nama_jurnal_matematika")),
+                       
+                       br()
+                       
+                ),
+                
+                
+                
+                column(4,
+                       
+                     
+                       br()
+                       
+                )
+                
+                
+                
+                
+                
+              ), #Akhir Fluidrow
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
               
               
               
@@ -2104,6 +2251,734 @@ connected_paper_by_keyword_ui <- function(id) {
 connected_paper_by_keyword_server <- function(input, output, session) {
   
   
+  
+  
+  ###########12 Oktober 2025, Jurnal Kesehatan
+  ###########12 Oktober 2025, Jurnal Kesehatan
+  ###########12 Oktober 2025, Jurnal Kesehatan
+  ###########12 Oktober 2025, Jurnal Kesehatan
+  ###########12 Oktober 2025, Jurnal Kesehatan
+  ###########12 Oktober 2025, Jurnal Kesehatan
+  
+  
+  fungsi_nama_jurnal_kesehatan <- function()
+  {
+    
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126")
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_kesehatan
+    indeks <- which(indeks == TRUE)
+    data_jurnal_kesehatan <- dat[c(indeks),]
+    
+    dat <- data_jurnal_kesehatan
+    
+    
+    grup <- group_by(dat, `Name of Journal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+    
+    
+    informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+    
+    for( i in 1 : length(data_jurnal[,1]))
+    {
+      
+      nama <- data_jurnal[i,"Journal"]
+      issn <- data_jurnal[i,"ISSN"]
+      jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+      informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"--",issn," (",jumlah,")")
+      
+    }
+    
+    data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+    colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+    
+    
+    return(informasi_jurnal_jumlah_artikel)
+    
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  ##############
+  ##############
+  ##############
+  
+  
+  
+  output$tampilkan_nama_jurnal_kesehatan <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_kesehatan"), 
+                       label="Health:", choices = c( fungsi_nama_jurnal_kesehatan()), 
+                       selected=c( fungsi_nama_jurnal_kesehatan()   ), inline = FALSE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ###########12 Oktober 2025, Jurnal Psikologi
+  ###########12 Oktober 2025, Jurnal Psikologi
+  ###########12 Oktober 2025, Jurnal Psikologi
+  ###########12 Oktober 2025, Jurnal Psikologi
+  ###########12 Oktober 2025, Jurnal Psikologi
+  ###########12 Oktober 2025, Jurnal Psikologi
+  
+  
+  fungsi_nama_jurnal_psikologi <- function()
+  {
+    
+    ISSN_jurnal_psikologi <- c("25277456", "26213893", "26543672", "26545713", "26564173", "27156206", "27208958",
+                               "27210626", "27227669", "24772674", "25285858", "25481800", "25496166", "25499882", "25796321", 
+                               "25801228", "25807331", "26155168", "26158183", "2460867X", "25496468", "2541450X", "25796518",
+                               "26158558", "23021098", "25022903")
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_psikologi
+    indeks <- which(indeks == TRUE)
+    data_jurnal_psikologi <- dat[c(indeks),]
+    
+    dat <- data_jurnal_psikologi
+    
+    
+    grup <- group_by(dat, `Name of Journal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+    
+    
+    informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+    
+    for( i in 1 : length(data_jurnal[,1]))
+    {
+      
+      nama <- data_jurnal[i,"Journal"]
+      issn <- data_jurnal[i,"ISSN"]
+      jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+      informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"--",issn," (",jumlah,")")
+      
+    }
+    
+    data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+    colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+    
+    
+    return(informasi_jurnal_jumlah_artikel)
+    
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  ##############
+  ##############
+  ##############
+  
+  
+  
+  output$tampilkan_nama_jurnal_psikologi <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_psikologi"), 
+                       label="Psychology:", choices = c( fungsi_nama_jurnal_psikologi()), 
+                       selected=c( fungsi_nama_jurnal_psikologi()   ), inline = FALSE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ###########12 Oktober 2025, Jurnal ekonomi
+  ###########12 Oktober 2025, Jurnal ekonomi
+  ###########12 Oktober 2025, Jurnal ekonomi
+  ###########12 Oktober 2025, Jurnal ekonomi
+  ###########12 Oktober 2025, Jurnal ekonomi
+  ###########12 Oktober 2025, Jurnal ekonomi
+  
+  
+  fungsi_nama_jurnal_ekonomi <- function()
+  {
+    
+    ISSN_jurnal_ekonomi <- c("25273027", "24069280", "25275143", "25974564", "2621668X", "24610771", 
+                             "20895879", "26150689", "25286528", "25498800", "23387238", "23388137")
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_ekonomi
+    indeks <- which(indeks == TRUE)
+    data_jurnal_ekonomi <- dat[c(indeks),]
+    
+    dat <- data_jurnal_ekonomi
+    
+    
+    grup <- group_by(dat, `Name of Journal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+    
+    
+    informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+    
+    for( i in 1 : length(data_jurnal[,1]))
+    {
+      
+      nama <- data_jurnal[i,"Journal"]
+      issn <- data_jurnal[i,"ISSN"]
+      jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+      informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"--",issn," (",jumlah,")")
+      
+    }
+    
+    data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+    colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+    
+    
+    return(informasi_jurnal_jumlah_artikel)
+    
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  ##############
+  ##############
+  ##############
+  
+  
+  
+  output$tampilkan_nama_jurnal_ekonomi <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_ekonomi"), 
+                       label="Economy:", choices = c( fungsi_nama_jurnal_ekonomi()), 
+                       selected=c( fungsi_nama_jurnal_ekonomi()   ), inline = FALSE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ###########12 Oktober 2025, Jurnal agama_dan_hukum
+  ###########12 Oktober 2025, Jurnal agama_dan_hukum
+  ###########12 Oktober 2025, Jurnal agama_dan_hukum
+  ###########12 Oktober 2025, Jurnal agama_dan_hukum
+  ###########12 Oktober 2025, Jurnal agama_dan_hukum
+  ###########12 Oktober 2025, Jurnal agama_dan_hukum
+  
+  
+  fungsi_nama_jurnal_agama_dan_hukum <- function()
+  {
+    
+    ISSN_jurnal_agama_dan_hukum <- c("25802763", "27215040")
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_agama_dan_hukum
+    indeks <- which(indeks == TRUE)
+    data_jurnal_agama_dan_hukum <- dat[c(indeks),]
+    
+    dat <- data_jurnal_agama_dan_hukum
+    
+    
+    grup <- group_by(dat, `Name of Journal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+    
+    
+    informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+    
+    for( i in 1 : length(data_jurnal[,1]))
+    {
+      
+      nama <- data_jurnal[i,"Journal"]
+      issn <- data_jurnal[i,"ISSN"]
+      jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+      informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"--",issn," (",jumlah,")")
+      
+    }
+    
+    data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+    colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+    
+    
+    return(informasi_jurnal_jumlah_artikel)
+    
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  ##############
+  ##############
+  ##############
+  
+  
+  
+  output$tampilkan_nama_jurnal_agama_dan_hukum <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_agama_dan_hukum"), 
+                       label="Religion & Law:", choices = c( fungsi_nama_jurnal_agama_dan_hukum()), 
+                       selected=c( fungsi_nama_jurnal_agama_dan_hukum()   ), inline = FALSE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ###########12 Oktober 2025, Jurnal matematika
+  ###########12 Oktober 2025, Jurnal matematika
+  ###########12 Oktober 2025, Jurnal matematika
+  ###########12 Oktober 2025, Jurnal matematika
+  ###########12 Oktober 2025, Jurnal matematika
+  ###########12 Oktober 2025, Jurnal matematika
+  
+  
+  fungsi_nama_jurnal_matematika <- function()
+  {
+    
+    ISSN_jurnal_matematika <- c("25491040", "25805754")
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_matematika
+    indeks <- which(indeks == TRUE)
+    data_jurnal_matematika <- dat[c(indeks),]
+    
+    dat <- data_jurnal_matematika
+    
+    
+    grup <- group_by(dat, `Name of Journal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+    
+    
+    informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+    
+    for( i in 1 : length(data_jurnal[,1]))
+    {
+      
+      nama <- data_jurnal[i,"Journal"]
+      issn <- data_jurnal[i,"ISSN"]
+      jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+      informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"--",issn," (",jumlah,")")
+      
+    }
+    
+    data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+    colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+    
+    
+    return(informasi_jurnal_jumlah_artikel)
+    
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  ##############
+  ##############
+  ##############
+  
+  
+  
+  output$tampilkan_nama_jurnal_matematika <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_matematika"), 
+                       label="Mathematics:", choices = c( fungsi_nama_jurnal_matematika()), 
+                       selected=c( fungsi_nama_jurnal_matematika()   ), inline = FALSE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   ##############11 Oktober 2025###############
   
   
@@ -2116,6 +2991,106 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
                       "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
                       "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    ###################
+    
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126")
+    
+
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_kesehatan
+    indeks <- which(indeks == FALSE) #ambil artikel yang bukan dari jurnal kesehatan
+    dat <- dat[c(indeks),]
+    
+    
+    
+    ###################
+    
+    ISSN_jurnal_psikologi <- c("25277456", "26213893", "26543672", "26545713", "26564173", "27156206", "27208958",
+                               "27210626", "27227669", "24772674", "25285858", "25481800", "25496166", "25499882", "25796321", 
+                               "25801228", "25807331", "26155168", "26158183", "2460867X", "25496468", "2541450X", "25796518",
+                               "26158558", "23021098", "25022903")
+    
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_psikologi
+    indeks <- which(indeks == FALSE) #ambil artikel yang bukan dari jurnal psikologi
+    dat <- dat[c(indeks),]
+    
+    
+    
+    ###################
+    
+    ISSN_jurnal_ekonomi <- c("25273027", "24069280", "25275143", "25974564", 
+                             "2621668X", "24610771", "20895879", "26150689", 
+                             "25286528", "25498800", "23387238", "23388137")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_ekonomi
+    indeks <- which(indeks == FALSE) #ambil artikel yang bukan dari jurnal ekonomi
+    dat <- dat[c(indeks),]
+    
+    
+    
+    ############################
+    
+    
+    ISSN_jurnal_agama_dan_hukum <- c("25802763", "27215040")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_agama_dan_hukum
+    indeks <- which(indeks == FALSE) #ambil artikel yang bukan dari jurnal agama dan hukum
+    dat <- dat[c(indeks),]
+    
+    
+    
+    
+    
+    
+    ############################
+    
+    
+    ISSN_jurnal_matematika <- c("25491040", "25805754")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_matematika
+    indeks <- which(indeks == FALSE) #ambil artikel yang bukan dari jurnal matematika
+    dat <- dat[c(indeks),]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ############################################Jurnal yang Dipilih#############################
+    ############################################Jurnal yang Dipilih#############################
+    ############################################Jurnal yang Dipilih#############################
+    ############################################Jurnal yang Dipilih#############################
+    ############################################Jurnal yang Dipilih#############################
+    ############################################Jurnal yang Dipilih#############################
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -2216,10 +3191,68 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     cat(sprintf("The Journal That You Choose: \n\n"))
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+   # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+
+    
     
     print(jurnal_terpilih)
-    
     
     
     
@@ -2244,6 +3277,13 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
     cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
     
     
   })
@@ -2462,15 +3502,79 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -2494,7 +3598,56 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -2946,15 +4099,79 @@ print(data_jurnal)
       
       
       
+      jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+      jumlah_artikel <- length(   dat[,1]     )
       
       
-      jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+      #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+      #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+      
+      
+      #cat(sprintf("The Journal That You Choose: \n\n"))
+      
+      
+      
+      ################Terpilih dari jurnal matematika##################
+      ################Terpilih dari jurnal matematika##################
+      ################Terpilih dari jurnal matematika##################
+      ################Terpilih dari jurnal matematika##################
+      
+      jurnal_terpilih <- vector(mode = "character")
+      
+      if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+      {
+        
+        jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+      }
+      
+      
+      
+      
+      if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+      {
+        
+        jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+      }
+      
+      
+      if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+      {
+        
+        jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+      }
+      
+      
+      
+      
+      if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+      {
+        
+        jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+      }
+      
+      
+      
+      if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+      {
+        
+        jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+      }
+      
+      
+      
+      # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+      
+      
+      #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+      #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+      #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+      #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+      
+      
+      
+      
       
       #print(jurnal_terpilih)
-      
-      
-      
-      cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
       
       
       
@@ -2978,7 +4195,56 @@ print(data_jurnal)
       
       jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
       
+      #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+      
+      
+      
+      
+      
+      
+      
+      
+      #######################
+      #######################
+      
+      
+      
+      cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+      
+      
       cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       
@@ -2990,6 +4256,12 @@ print(data_jurnal)
       #######Dengan jumlah keywords
       
       dat <- dat[c(indeks_jurnal_terpilih),]
+      
+      
+      
+      
+      
+      
       
       
       
@@ -3146,6 +4418,8 @@ print(data_jurnal)
     
     
     
+    
+    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
@@ -3155,15 +4429,79 @@ print(data_jurnal)
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -3187,7 +4525,56 @@ print(data_jurnal)
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -3199,6 +4586,9 @@ print(data_jurnal)
     #######Dengan jumlah keywords
     
     dat <- dat[c(indeks_jurnal_terpilih),]
+    
+    
+    
     
     
     
@@ -3389,15 +4779,79 @@ print(data_jurnal)
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -3421,7 +4875,53 @@ print(data_jurnal)
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -4901,6 +6401,9 @@ print(data_jurnal)
   output$distribusi_frekuensi_data_keywords <- DT::renderDT({
     
     
+    
+    
+    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
@@ -4910,15 +6413,79 @@ print(data_jurnal)
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -4942,7 +6509,56 @@ print(data_jurnal)
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -4954,6 +6570,8 @@ print(data_jurnal)
     #######Dengan jumlah keywords
     
     dat <- dat[c(indeks_jurnal_terpilih),]
+    
+    
     
     
     cek_keyword = input$get_keyword
@@ -5091,15 +6709,79 @@ print(data_jurnal)
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -5123,7 +6805,56 @@ print(data_jurnal)
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -5283,7 +7014,6 @@ p <-    simpan_kata %>%
   
   output$grafik_wordcloud_full <- renderPlot({
     
-
     
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
@@ -5294,15 +7024,79 @@ p <-    simpan_kata %>%
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -5326,7 +7120,56 @@ p <-    simpan_kata %>%
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -5538,6 +7381,8 @@ p <-    simpan_kata %>%
   output$grafik_pemetaan_kata_kunci_keseluruhan<- renderPlot({
     
     
+    
+    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
@@ -5547,15 +7392,79 @@ p <-    simpan_kata %>%
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -5579,7 +7488,52 @@ p <-    simpan_kata %>%
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -5769,6 +7723,8 @@ p <-    simpan_kata %>%
   output$pemetaan_kata_kunci_1 <- renderPlot({
     
     
+    
+    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
@@ -5778,15 +7734,79 @@ p <-    simpan_kata %>%
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -5810,7 +7830,56 @@ p <-    simpan_kata %>%
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -5822,6 +7891,9 @@ p <-    simpan_kata %>%
     #######Dengan jumlah keywords
     
     dat <- dat[c(indeks_jurnal_terpilih),]
+    
+    
+    
     
     
     cek_keyword = input$get_keyword
@@ -5943,6 +8015,9 @@ p <-    simpan_kata %>%
   {
     
     
+    
+    
+    
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
     
@@ -5952,15 +8027,79 @@ p <-    simpan_kata %>%
     
     
     
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
     
     
-    jurnal_terpilih <- input$terpilih_tampilkan_informasi_semua_jurnal_dan_jumlah_artikel
+    #cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    #cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    #cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
     
     #print(jurnal_terpilih)
-    
-    
-    
-    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
     
     
     
@@ -5984,7 +8123,56 @@ p <-    simpan_kata %>%
     
     jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
     
+    #cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    #######################
+    #######################
+    
+    
+    
+    cat(sprintf("Number of Journal That You Choose: %d Journal\n\n", length(jurnal_terpilih)))
+    
+    
     cat(sprintf("Number of Article: %d\n\n", jumlah_jurnal_terpilih))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
