@@ -261,6 +261,7 @@ connected_paper_by_keyword_ui <- function(id) {
                 
                 column(4,
                        
+                       uiOutput(ns("tampilkan_nama_jurnal_Science_and_Engineering")),
                      
                        br()
                        
@@ -2979,6 +2980,181 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ###########15 Oktober 2025, Jurnal Science_and_Engineering
+  ###########15 Oktober 2025, Jurnal Science_and_Engineering
+  ###########15 Oktober 2025, Jurnal Science_and_Engineering
+  ###########15 Oktober 2025, Jurnal Science_and_Engineering
+  ###########15 Oktober 2025, Jurnal Science_and_Engineering
+  ###########15 Oktober 2025, Jurnal Science_and_Engineering
+  
+  
+  fungsi_nama_jurnal_Science_and_Engineering <- function()
+  {
+    
+    ISSN_jurnal_Science_and_Engineering <- c("27222578")
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_Science_and_Engineering
+    indeks <- which(indeks == TRUE)
+    data_jurnal_Science_and_Engineering <- dat[c(indeks),]
+    
+    dat <- data_jurnal_Science_and_Engineering
+    
+    
+    grup <- group_by(dat, `Name of Journal`, ISSN)
+    
+    data_jurnal <- grup %>% summarise(
+      freq = n()
+      
+    )
+    
+    data_jurnal <- as.data.frame(data_jurnal)
+    
+    colnames(data_jurnal) = c("Journal", "ISSN", "Number of Articles in Our Database")
+    
+    
+    
+    informasi_jurnal_jumlah_artikel <- vector(mode = "character")
+    
+    for( i in 1 : length(data_jurnal[,1]))
+    {
+      
+      nama <- data_jurnal[i,"Journal"]
+      issn <- data_jurnal[i,"ISSN"]
+      jumlah <- data_jurnal[i,"Number of Articles in Our Database"]
+      informasi_jurnal_jumlah_artikel[i] <- paste0(nama,"--",issn," (",jumlah,")")
+      
+    }
+    
+    data_jurnal_update <- data.frame(data_jurnal, informasi_jurnal_jumlah_artikel)
+    colnames(data_jurnal_update) <- c("Journal", "ISSN", "Number of Articles in Our Database", "Information")
+    
+    
+    return(informasi_jurnal_jumlah_artikel)
+    
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  ##############
+  ##############
+  ##############
+  
+  
+  
+  output$tampilkan_nama_jurnal_Science_and_Engineering <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_Science_and_Engineering"), 
+                       label="Science & Engineering:", choices = c( fungsi_nama_jurnal_Science_and_Engineering()), 
+                       selected=c( fungsi_nama_jurnal_Science_and_Engineering()   ), inline = FALSE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   ##############11 Oktober 2025###############
   
   
@@ -3053,6 +3229,21 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     indeks <- which(indeks == FALSE) #ambil artikel yang bukan dari jurnal matematika
     dat <- dat[c(indeks),]
     
+    
+    
+    
+    
+    
+    
+    
+    ############################
+    
+    
+    ISSN_jurnal_Science_and_Engineering <- c("27222578")
+    
+    indeks <- dat[,"ISSN"] %in% ISSN_jurnal_Science_and_Engineering
+    indeks <- which(indeks == FALSE) #ambil artikel yang bukan dari jurnal bidang science and enginering
+    dat <- dat[c(indeks),]
     
     
     
@@ -3237,6 +3428,18 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       
       jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
     }
+    
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+    }
+    
     
     
     
@@ -3558,6 +3761,16 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     {
       
       jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
     }
     
     
@@ -4159,6 +4372,17 @@ print(data_jurnal)
       
       
       
+      
+      
+      if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+      {
+        
+        jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+      }
+      
+      
+      
+      
       # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
       
       
@@ -4486,6 +4710,18 @@ print(data_jurnal)
       
       jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
     }
+    
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+    }
+    
     
     
     
@@ -4835,6 +5071,17 @@ print(data_jurnal)
     {
       
       jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
     }
     
     
@@ -6473,6 +6720,18 @@ print(data_jurnal)
     
     
     
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+    }
+    
+    
+    
     # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
     
     
@@ -6765,6 +7024,17 @@ print(data_jurnal)
     {
       
       jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
     }
     
     
@@ -7080,6 +7350,18 @@ p <-    simpan_kata %>%
     {
       
       jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
     }
     
     
@@ -7452,6 +7734,17 @@ p <-    simpan_kata %>%
     
     
     
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+    }
+    
+    
+    
     # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
     
     
@@ -7794,6 +8087,17 @@ p <-    simpan_kata %>%
     
     
     
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+    }
+    
+    
+    
+    
     # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
     
     
@@ -8084,6 +8388,17 @@ p <-    simpan_kata %>%
       
       jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
     }
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+    }
+    
     
     
     
