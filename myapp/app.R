@@ -137,15 +137,15 @@ connected_paper_by_keyword_ui <- function(id) {
      
      
      
-     tabPanel(title = tags$h5( tags$img(src = "selected journal new.gif", width = "30px"), 'Selected Journal'),
+     tabPanel(title = tags$h5( tags$img(src = "selected journal new.gif", width = "30px"), 'Journal Selection'),
               
               
-              h1("Selected Journal",style="text-shadow: -1px 0 blue,
-               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+            #  h1("Select Journal",style="text-shadow: -1px 0 blue,
+             #  0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
               
-              br(),
+             # br(),
               
-              shinycssloaders::withSpinner(verbatimTextOutput(ns("informasi_cetak"))),
+              #shinycssloaders::withSpinner(verbatimTextOutput(ns("informasi_cetak"))),
               
               
               
@@ -332,7 +332,81 @@ connected_paper_by_keyword_ui <- function(id) {
               
               br()       
               
-     ),
+     ), #Akhir tab journal selection
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     tabPanel(title = tags$h5( tags$img(src = "jurnal-terpilih-unscreen.gif", width = "30px"), 'The Journal You Choose'),
+              
+              
+              # h1("Select Journal",style="text-shadow: -1px 0 blue,
+             # 0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+              
+              #br(),
+              
+              shinycssloaders::withSpinner(verbatimTextOutput(ns("informasi_cetak"))),
+              
+              
+              
+
+
+br()
+
+
+
+), #Akhir tab the journal you choose
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
      
      
      
