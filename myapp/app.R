@@ -2339,7 +2339,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   fungsi_nama_jurnal_kesehatan <- function()
   {
     
-    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126")
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681")
     
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
@@ -2408,7 +2408,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_kesehatan"), 
                        label="Health:", choices = c( fungsi_nama_jurnal_kesehatan()), 
-                       selected=c( fungsi_nama_jurnal_kesehatan()   ), inline = FALSE )
+                       selected=c(   ), inline = FALSE )
     
     
     
@@ -2542,7 +2542,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_psikologi"), 
                        label="Psychology:", choices = c( fungsi_nama_jurnal_psikologi()), 
-                       selected=c( fungsi_nama_jurnal_psikologi()   ), inline = FALSE )
+                       selected=c(    ), inline = FALSE )
     
     
     
@@ -2711,7 +2711,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_ekonomi"), 
                        label="Economy:", choices = c( fungsi_nama_jurnal_ekonomi()), 
-                       selected=c( fungsi_nama_jurnal_ekonomi()   ), inline = FALSE )
+                       selected=c(    ), inline = FALSE )
     
     
     
@@ -2877,7 +2877,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_agama_dan_hukum"), 
                        label="Religion & Law:", choices = c( fungsi_nama_jurnal_agama_dan_hukum()), 
-                       selected=c( fungsi_nama_jurnal_agama_dan_hukum()   ), inline = FALSE )
+                       selected=c(   ), inline = FALSE )
     
     
     
@@ -3033,7 +3033,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_matematika"), 
                        label="Mathematics:", choices = c( fungsi_nama_jurnal_matematika()), 
-                       selected=c( fungsi_nama_jurnal_matematika()   ), inline = FALSE )
+                       selected=c(   ), inline = FALSE )
     
     
     
@@ -3184,7 +3184,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     checkboxGroupInput(session$ns("terpilih_fungsi_nama_jurnal_Science_and_Engineering"), 
                        label="Science & Engineering:", choices = c( fungsi_nama_jurnal_Science_and_Engineering()), 
-                       selected=c( fungsi_nama_jurnal_Science_and_Engineering()   ), inline = FALSE )
+                       selected=c(    ), inline = FALSE )
     
     
     
@@ -3245,7 +3245,8 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     ###################
     
-    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126")
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952",
+                               "26204126", "25409301", "28299760", "25485334", "29618681")
     
 
     indeks <- dat[,"ISSN"] %in% ISSN_jurnal_kesehatan
