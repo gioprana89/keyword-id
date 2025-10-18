@@ -2339,7 +2339,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   fungsi_nama_jurnal_kesehatan <- function()
   {
     
-    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681")
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681", "2541092X")
     
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
@@ -3245,8 +3245,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     ###################
     
-    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952",
-                               "26204126", "25409301", "28299760", "25485334", "29618681")
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681", "2541092X")
     
 
     indeks <- dat[,"ISSN"] %in% ISSN_jurnal_kesehatan
