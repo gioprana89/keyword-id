@@ -66,6 +66,8 @@ data_jurnal
 
 #Jumlah Keywords
 ```{r}
+library(stringi)
+library(stringr)
 
 ambil_keyword <- data_paper[,"Keyword"]
 ambil_keyword <- as.data.frame(ambil_keyword)
@@ -79,6 +81,13 @@ for(i in 1 :  length(ambil_keyword[,1])  )
   X <- ambil_keyword[i,1]
   
   X <- tolower(X) #mengubah menjadi huruf kecil
+  
+  
+       X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
 
      
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
@@ -139,6 +148,12 @@ for(i in 1 :  length(ambil_scope[,1])  )
   X <- ambil_scope[i,1]
   
   X <- tolower(X) #mengubah menjadi huruf kecil
+  
+       X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
 
       
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
@@ -1113,6 +1128,17 @@ dat
       
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      
+      
+           X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+     X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+     
+     
+     
       
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))

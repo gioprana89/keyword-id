@@ -2339,7 +2339,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   fungsi_nama_jurnal_kesehatan <- function()
   {
     
-    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681", "2541092X", "23564067")
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681", "2541092X", "23564067", "27228169")
     
     dat <- read_xlsx("data_paper.xlsx")
     dat <- as.data.frame(dat)
@@ -3245,7 +3245,7 @@ connected_paper_by_keyword_server <- function(input, output, session) {
     
     ###################
     
-    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681", "2541092X", "23564067")
+    ISSN_jurnal_kesehatan <- c("23563656", "25407872", "30316502", "24771570", "2540881X", "27754952", "26204126", "25409301", "28299760", "25485334", "29618681", "2541092X", "23564067", "27228169")
     
 
     indeks <- dat[,"ISSN"] %in% ISSN_jurnal_kesehatan
@@ -3963,6 +3963,13 @@ connected_paper_by_keyword_server <- function(input, output, session) {
       X <- tolower(X) #mengubah menjadi huruf kecil
       
       
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
@@ -4587,6 +4594,13 @@ print(data_jurnal)
         X <- tolower(X) #mengubah menjadi huruf kecil
         
         
+        X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+        X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+        X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+        X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+        X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+        
+        
         X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
         X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
         X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
@@ -4920,6 +4934,15 @@ print(data_jurnal)
       
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
       
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
@@ -5274,6 +5297,16 @@ print(data_jurnal)
       
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
+      
       
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
@@ -6922,6 +6955,17 @@ print(data_jurnal)
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
       
+      
+      
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
+      
+      
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
@@ -7226,6 +7270,17 @@ print(data_jurnal)
       
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      
+      
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
+      
       
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
@@ -7553,6 +7608,17 @@ p <-    simpan_kata %>%
       
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      
+      
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
+      
       
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
@@ -8289,6 +8355,16 @@ p <-    simpan_kata %>%
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
       
+      
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
+      
+      
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), ";  ", fixed = TRUE))
@@ -8589,6 +8665,16 @@ p <-    simpan_kata %>%
       
       X <- tolower(X) #mengubah menjadi huruf kecil
       cek_keyword <- tolower(cek_keyword) #mengubah menjadi huruf kecil
+      
+      
+      X <- str_replace_all(X, "  ;  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, " ; ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";   ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, ";  ", ";") #tambahan kode di 19 oktober 2025
+      X <- str_replace_all(X, "; ", ";") #tambahan kode di 19 oktober 2025
+      
+      
+      
       
       X <- unlist(strsplit(as.character(X), "  ;", fixed = TRUE))
       X <- unlist(strsplit(as.character(X), " ;", fixed = TRUE))
