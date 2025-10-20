@@ -364,6 +364,28 @@ connected_paper_by_keyword_ui <- function(id) {
               
               shinycssloaders::withSpinner(verbatimTextOutput(ns("informasi_cetak"))),
               
+             
+             br(),
+             br(),
+             
+             
+             h1("Article Journal",style="text-shadow: -1px 0 blue,
+               0 1px blue, 1px 0 blue, 0 -1px blue; text-align:center;font-size:30px"         ),
+             
+             
+             br(),
+             
+             
+             
+             uiOutput(ns("tampilkan_pilihan_variabel_yang_akan_ditampilkan_pada_artikel_yang_dipilih")),
+             
+             br(),
+             
+             uiOutput(ns("tampilkan_data_pada_artikel_yang_dipilih")),
+             
+             
+             
+             
               
               
 
@@ -3648,6 +3670,376 @@ connected_paper_by_keyword_server <- function(input, output, session) {
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #########################
+  
+  
+  
+  output$tampilkan_pilihan_variabel_yang_akan_ditampilkan_pada_artikel_yang_dipilih <- renderUI({
+    
+    
+    
+    
+    checkboxGroupInput(session$ns("terpilih_variabel_yang_akan_ditampilkan_pada_artikel_yang_sudah_dipilih"), 
+                       label="Select Information:", choices = c( kirim_nama_variabel()), 
+                       selected=c("Title of Article", "Author", "Number of Author", 
+                                  "Year", "Volume", "Issue", "Page", "Name of Journal", "Keywords", "ISSN"), inline = TRUE )
+    
+    
+    
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #############
+  
+  
+  
+  
+  output$tampilkan_data_pada_artikel_yang_dipilih <- renderUI({
+    
+    shinycssloaders::withSpinner(DT::DTOutput(session$ns("informasi_artikel_yang_ditampilkan")))
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ###############
+  
+  
+  
+  output$informasi_artikel_yang_ditampilkan <- DT::renderDT({
+    
+    
+    dat <- read_xlsx("data_paper.xlsx")
+    dat <- as.data.frame(dat)
+    
+    colnames(dat) = c("Number", "Title of Article", "Author", "Number of Author", "Year", "Volume", "Issue", 
+                      "Page", "Name of Journal", "Keywords", "ISSN", "Abstract", "Article's Source", "Sinta", 
+                      "Scopus", "Scope", "Already Downloaded?", "Date", "Unique ID")
+    
+    
+    
+    jumlah_jurnal <- length(  levels(     as.factor(    dat[,"Name of Journal"]       )         )        )
+    jumlah_artikel <- length(   dat[,1]     )
+    
+    
+    # cat(sprintf("Number of Journal in Our Database: %d\n\n", jumlah_jurnal))
+    # cat(sprintf("Number of Article in Our Database: %d\n\n", jumlah_artikel))
+    
+    
+    # cat(sprintf("The Journal That You Choose: \n\n"))
+    
+    
+    
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    ################Terpilih dari jurnal matematika##################
+    
+    jurnal_terpilih <- vector(mode = "character")
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_matematika) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_matematika)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_kesehatan) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_kesehatan)
+    }
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_psikologi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_psikologi)
+    }
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_ekonomi) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_ekonomi)
+    }
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_agama_dan_hukum) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_agama_dan_hukum)
+    }
+    
+    
+    
+    
+    
+    
+    if( length(input$terpilih_fungsi_nama_jurnal_Science_and_Engineering) != 0 )
+    {
+      
+      jurnal_terpilih <- c(jurnal_terpilih, input$terpilih_fungsi_nama_jurnal_Science_and_Engineering)
+    }
+    
+    
+    
+    
+    # terpilih_artikel_di_jurnal_matematika <- input$terpilih_fungsi_nama_jurnal_matematika
+    
+    
+    #terpilih_artikel_di_jurnal_kesehatan <- input$terpilih_fungsi_nama_jurnal_kesehatan
+    #terpilih_artikel_di_jurnal_psikologi <-  input$terpilih_fungsi_nama_jurnal_psikologi
+    #terpilih_artikel_di_jurnal_ekonomi <- input$terpilih_fungsi_nama_jurnal_ekonomi
+    #terpilih_artikel_di_jurnal_agama_dan_kesehatan <-  input$terpilih_fungsi_nama_jurnal_agama_dan_hukum
+    
+    
+    
+    
+    
+    # print(jurnal_terpilih)
+    
+    
+    
+    simpan_nama_jurnal_terpilih <- ""
+    
+    
+    for(i in 1 : length(jurnal_terpilih))
+    {
+      a <-  strsplit(jurnal_terpilih[i], "--")
+      
+      simpan_nama_jurnal_terpilih[i] <- a[[1]][1]
+    }
+    
+    
+    
+    #print(simpan_nama_jurnal_terpilih)
+    
+    indeks_jurnal_terpilih <- dat[,"Name of Journal"] %in% simpan_nama_jurnal_terpilih 
+    indeks_jurnal_terpilih <- which(indeks_jurnal_terpilih == TRUE)
+    
+    
+    jumlah_jurnal_terpilih <- length(indeks_jurnal_terpilih)
+    
+    # cat(sprintf("With Number of Article: %d", jumlah_jurnal_terpilih))
+    
+    
+    
+    dat2 <- dat[c(indeks_jurnal_terpilih),]
+    
+    
+    nama_kolom_terpilih <- input$terpilih_variabel_yang_akan_ditampilkan_pada_artikel_yang_sudah_dipilih
+    
+    dat3 <- dat2[c(nama_kolom_terpilih)]
+    
+    print(dat3)
+    
+    
+    
+  })
   
   
   
